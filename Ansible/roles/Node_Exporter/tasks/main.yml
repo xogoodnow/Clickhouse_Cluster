@@ -1,0 +1,39 @@
+---
+- name: check connectivity
+  ping:
+    data: alive
+
+- name: update and upgrade system
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+
+- name: pull the required image for Node Exporter
+  docker_image:
+    name: prom/node-exporter
+    tag: "{{ node_exporter_version }}"
+    source: pull
+
+- name: Run the container for Node Exporter
+  docker_container:
+    name: node-exporter
+    image: prom/node-exporter:{{ node_exporter_version }}
+    restart_policy: unless-stopped
+    state: started
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+    published_ports:
+      - 9100:9100
+    network_mode: host
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+
+
+
+
