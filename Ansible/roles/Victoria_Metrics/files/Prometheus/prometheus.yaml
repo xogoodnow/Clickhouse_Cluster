@@ -1,0 +1,45 @@
+global:
+  scrape_interval: 10s
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+rule_files:
+  - "alert_rules.yaml"
+
+scrape_configs:
+#  - job_name: 'prometheus_metrics'
+#    scrape_interval: 5s
+#    static_configs:
+#      - targets: ['prometheus:9090']
+
+  - job_name: 'node_exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+          - monitoring-0:9100
+          - monitoring-1:9100
+          - Clickhouse-0:9100
+          - Clickhouse-1:9100
+          - Clickhouse-2:9100
+
+
+  - job_name: 'Redis_exporter'
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+
+          - Clickhouse-0:9116
+          - Clickhouse-1:9116
+          - Clickhouse-2:9116
+
+
+
+
+
+

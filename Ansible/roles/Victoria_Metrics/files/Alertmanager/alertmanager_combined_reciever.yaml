@@ -1,0 +1,36 @@
+global:
+  slack_api_url: '<your slack webhook url>'
+
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1m
+  receiver: 'slack-email-notifications'
+
+receivers:
+  - name: 'web.hook'
+    webhook_configs:
+      - url: 'http://127.0.0.1:5001/'
+
+
+  - name: 'slack-email-notifications'
+    slack_configs:
+      - channel: '#monitoring'
+        send_resolved: true
+    email_configs:
+      - to: '<Email Address of Alert Reciever>'
+        from: '<Email Address of Alert Sender>'
+        #Keep in mind that this is for gmail and you can add the address of any smtp server here
+        smarthost: smtp.gmail.com:587
+        auth_username: '<Email Address of Alert Sender>'
+        auth_identity: '<Email Address of Alert Sender>'
+        auth_password: '<Email Password Of The Alert Sender>'
+        send_resolved: true
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']

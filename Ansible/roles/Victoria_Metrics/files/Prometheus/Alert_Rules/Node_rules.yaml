@@ -1,0 +1,65 @@
+groups:
+  - name: node_alerts
+    rules:
+      - alert: HighCpuUsage
+        expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 2m
+        annotations:
+          summary: "High CPU usage detected on instance {{ $labels.instance }}"
+          description: "CPU usage is above 80% for 2 minutes"
+
+
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 80
+        for: 2m
+        annotations:
+          summary: "High memory usage detected on instance {{ $labels.instance }}"
+          description: "Memory usage is above 80% for 2 minutes"
+
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes / node_filesystem_size_bytes) * 100 < 20
+        for: 2m
+        annotations:
+          summary: "Low disk space detected on instance {{ $labels.instance }}"
+          description: "Disk space is below 20% for 2 minutes"
+
+
+      - alert: InstanceTimeDrift
+        expr: abs(node_timex_offset_seconds) > 0.05
+        for: 5m
+        annotations:
+          summary: "Time drift detected on {{ $labels.instance }}"
+          description: "The instance's time offset from the NTP server is more than 50ms for 5 minutes."
+
+  - name: System_Alerts
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 5m
+        annotations:
+          summary: "Instance {{ $labels.instance }} is down"
+          description: "The instance has been down for more than 5 minutes."
+
+      - alert: HighLoadAverage5m
+        expr: node_load5 > 5
+        for: 5m
+        annotations:
+          summary: "High load average detected on {{ $labels.instance }}"
+          description: "The load average (last 5 minutes) is above 5 for 5 minutes."
+
+      - alert: RapidDiskWritesIncrease
+        expr: predict_linear(node_disk_written_bytes_total[1h], 4 * 3600) > 5000000000
+        for: 10m
+        annotations:
+          summary: "Rapid increase in disk writes on {{ $labels.instance }}"
+          description: "The rate of increase in disk writes suggests the disk might be full within the next 4 hours."
+
+      - alert: RapidNetworkTrafficIncrease
+        expr: predict_linear(node_network_receive_bytes_total[1h], 4 * 3600) > 1000000000
+        for: 10m
+        annotations:
+          summary: "Rapid increase in network traffic on {{ $labels.instance }}"
+          description: "The rate of increase in network traffic suggests there might be an unusual network activity in the next 4 hours."
+
+
+

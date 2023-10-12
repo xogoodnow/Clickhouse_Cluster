@@ -1,0 +1,77 @@
+global:
+  slack_api_url: '<your slack webhook url>'
+
+route:
+  group_by: ['alertname']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 1m
+  routes:
+    - match:
+        severity: 'critical'
+      receiver: 'slack-notifications'
+
+    - match:
+        severity: 'warning'
+      receiver: 'email-notifications'
+
+receivers:
+  - name: 'web.hook'
+    webhook_configs:
+      - url: 'http://127.0.0.1:5001/'
+
+  - name: 'slack-notifications'
+    slack_configs:
+      - channel: '#monitoring'
+        send_resolved: true
+
+  - name: 'email-notifications'
+    email_configs:
+      - to: '<Email Address of Alert Receiver>'
+        from: '<Email Address of Alert Sender>'
+        smarthost: smtp.gmail.com:587
+        auth_username: '<Email Address of Alert Sender>'
+        auth_identity: '<Email Address of Alert Sender>'
+        auth_password: '<Email Password Of The Alert Sender>'
+        send_resolved: true
+
+inhibit_rules:
+
+    # When an instace is down, all alers are inhibited due to this issue
+  - source_match:
+      alertname: "InstanceDown"
+    target_match:
+      severity: 'warning'
+    equal: ['instance']
+  - source_match:
+      alertname: "InstanceDown"
+    target_match:
+      severity: 'critical'
+    equal: ['instance']
+
+
+  - source_match:
+      alertname: 'CephOsdDown'
+    target_match:
+      alertname: 'CephState'
+    equal: ['instance']
+
+  - source_match:
+      alertname: 'CephOsdDown'
+    target_match:
+      alertname: 'ceph_pg_down'
+    equal: ['instance']
+
+
+  - source_match:
+      alertname: 'High latency HTTP'
+    target_match:
+      alertname: 'High latency ping'
+    equal: ['instance']
+
+
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
