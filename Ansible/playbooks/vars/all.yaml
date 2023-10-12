@@ -1,0 +1,8 @@
+name_server: 8.8.8.8
+vmagent_version: latest
+victoria_metrics_version: latest
+grafana_version: latest
+vmalert_version: latest
+alertmanager_version: latest
+node_exporter_version: latest
+
