@@ -6,7 +6,7 @@ all:
                 clickhouse-hel-${index}:
                     ansible_host: ${ip}
                     ansible_user: root
-                    mode: 'redis'
+                    mode: 'clickhouse'
                     init_cluster: ${index == 0 ? "'true'" : "'false'"}
             %{ endfor }
 
