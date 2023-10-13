@@ -3,7 +3,7 @@ data "hcloud_server" "clickhouse" {
   name = "clickhouse-${count.index}"
 }
 
-resource "hcloud_volume" "osd_volumes" {
+resource "hcloud_volume" "clickhouse_volumes" {
   count = length(data.hcloud_server.clickhouse)
   name  = "clickhouse-${count.index}-volume"
   size  = 250
