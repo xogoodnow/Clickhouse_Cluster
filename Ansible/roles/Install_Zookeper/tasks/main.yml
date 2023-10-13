@@ -23,13 +23,13 @@
     source: pull
 
 
-- name: Set the config file for Zookeper instances
-  template:
-    dest: /root/zookeper/zoo.cfg
-    src: "templates/{{ item }}"
-    mode: "0777"
-  with_items:
-    - zoo.cfg.j2
+#- name: Set the config file for Zookeper instances
+#  template:
+#    dest: /root/zookeper/zoo.cfg
+#    src: "templates/{{ item }}"
+#    mode: "0777"
+#  with_items:
+#    - zoo.cfg.j2
 
 
 
@@ -41,7 +41,7 @@
     network_mode: host
     state: started
     volumes:
-      - "/root/zookeper/zoo.cfg:/conf/zoo.cfg"
+#      - "/root/zookeper/zoo.cfg:/conf/zoo.cfg"
       - "/root/zookeper/data/:/data"
 
 
