@@ -3,7 +3,7 @@
   ping:
     data: alive
 
-- name: Fine-tune the kernel module to optimize ceph nodes
+- name: Fine-tune the kernel module to optimize Clickhouse nodes
   sysctl:
     name: "{{ item.name }}"
     value: "{{ item.value }}"
