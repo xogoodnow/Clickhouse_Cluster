@@ -1,0 +1,51 @@
+---
+- name: check connectivity
+  ping:
+    data: alive
+
+
+- name: Create the required directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0777"
+  with_items:
+    - /root/zookeper/
+    - /root/zookeper/data/zookeper
+
+
+
+- name: Pull the Zookeper image
+  docker_image:
+    name: zookeeper:{{ zookeper_version }}
+    source: pull
+
+
+- name: Set the config file for Zookeper instances
+  template:
+    dest: /root/zookeper/zoo.cfg
+    src: "templates/{{ item }}"
+    mode: "0777"
+  with_items:
+    - zoo.cfg.j2
+
+
+
+- name: Run the Zookeper container
+  docker_container:
+    name: "{{ ansible_hostname }}-clickhouse-Zookeper"
+    image: zookeeper:{{ zookeper_version }}
+    restart_policy: unless-stopped
+    network_mode: host
+    state: started
+    volumes:
+      - "/root/zookeper/zoo.cfg:/conf/zoo.cfg"
+      - "/root/zookeper/data/:/data"
+
+
+
+
+
+
