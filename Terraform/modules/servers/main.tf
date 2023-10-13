@@ -37,7 +37,7 @@ data "hcloud_ssh_key" "key3" {
 resource "local_file" "inventory" {
   content = templatefile("${path.module}/inventory.tpl",
     {
-      redis_ips = hcloud_server.clickhouse.*.ipv4_address
+      clickhouse_ips = hcloud_server.clickhouse.*.ipv4_address
       monitoring_ips = hcloud_server.monitoring.*.ipv4_address
     }
   )
@@ -48,7 +48,7 @@ resource "local_file" "inventory" {
 resource "local_file" "etcd-hosts" {
   content  = templatefile("${path.module}/etchost.tpl",
     {
-      redis_ips = hcloud_server.clickhouse.*.ipv4_address
+      clickhouse_ips = hcloud_server.clickhouse.*.ipv4_address
       monitoring_ips = hcloud_server.monitoring.*.ipv4_address
     }
   )
