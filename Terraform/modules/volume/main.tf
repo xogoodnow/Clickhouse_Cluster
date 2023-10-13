@@ -1,11 +1,11 @@
-data "hcloud_server" "redis" {
+data "hcloud_server" "clickhouse" {
   count = 3
-  name = "redis-${count.index}"
+  name = "clickhouse-${count.index}"
 }
 
 resource "hcloud_volume" "osd_volumes" {
-  count = length(data.hcloud_server.redis)
-  name  = "redis-${count.index}-volume"
+  count = length(data.hcloud_server.clickhouse)
+  name  = "clickhouse-${count.index}-volume"
   size  = 250
-  server_id = data.hcloud_server.redis[count.index].id
+  server_id = data.hcloud_server.clickhouse[count.index].id
 }
