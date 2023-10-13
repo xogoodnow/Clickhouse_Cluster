@@ -40,20 +40,18 @@
     network_mode: host
     state: started
     env:
-      CLICKHOUSE_DB: my_database
-      CLICKHOUSE_USER: username
-      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
-      CLICKHOUSE_PASSWORD: password
+      CLICKHOUSE_DB: "my_database"
+      CLICKHOUSE_USER: "username"
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+      CLICKHOUSE_PASSWORD: "password"
+
     ulimits:
-      nofile:
-        soft: 262144
-        hard: 262144
+      - nofile:262144:262144
+
     volumes:
       - "/root/clickhouse/ch_data:/var/lib/clickhouse/"
       - "/root/clickhouse/ch_logs:/var/log/clickhouse-server/"
       - "/root/clickhouse/config.xml:/etc/clickhouse-server/config.xml"
-
-
 
 
 
