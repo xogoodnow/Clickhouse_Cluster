@@ -6,3 +6,4 @@ vmalert_version: latest
 alertmanager_version: latest
 node_exporter_version: latest
 clickhouse_version: latest
+zookeper_version: latest
