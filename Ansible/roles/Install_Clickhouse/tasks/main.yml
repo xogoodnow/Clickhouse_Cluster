@@ -1,0 +1,60 @@
+---
+- name: check connectivity
+  ping:
+    data: alive
+
+
+- name: Create the required directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0777"
+  with_items:
+    - /root/clickhouse/
+    - /root/clickhouse/ch_logs/
+    - /root/clickhouse/ch_data/
+
+
+
+- name: Pull the Clickhouse image
+  docker_image:
+    name: clickhouse/clickhouse-server:{{ clickhouse_version }}
+    source: pull
+
+
+- name: Set the config file for Redis master instances
+  template:
+    dest: /root/clickhouse/config.xml
+    src: templates/config.xml.j2
+    mode: "0777"
+
+
+
+- name: Run the Clickhouse container
+  docker_container:
+    name: "{{ ansible_hostname }}-clickhouse"
+    image: clickhouse/clickhouse-server:{{ clickhouse_version }}
+    restart_policy: unless-stopped
+    network_mode: host
+    state: started
+    env:
+      CLICKHOUSE_DB: my_database
+      CLICKHOUSE_USER: username
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+      CLICKHOUSE_PASSWORD: password
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    volumes:
+      - "/root/clickhouse/ch_data:/var/lib/clickhouse/"
+      - "/root/clickhouse/ch_logs:/var/log/clickhouse-server/"
+      - "/root/clickhouse/config.xml:/etc/clickhouse-server/config.xml"
+
+
+
+
+
+
