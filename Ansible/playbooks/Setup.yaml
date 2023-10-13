@@ -15,6 +15,15 @@
         - $PWD/roles/Install_Docker
 
 
+    - name: Deploy Clickhouse and Zookeper
+      include_role:
+        name: "{{ item }}"
+      with_items:
+        - $PWD/roles/Install_Clickhouse
+        - $PWD/roles/Install_Zookeper
+      when: mode == 'clickhouse'
+
+
 
     - name: Deploy Node exporter on all nodes
       include_role:
