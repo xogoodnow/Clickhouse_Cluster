@@ -173,25 +173,25 @@
         <KANG_CLICKHOUSE>
             <shard>
                 <replica>
-                    <host>clickhouse-1</host>
+                    <host>clickhouse-0</host>
                     <port>9000</port>
                     <user>username</user>
                     <password>password</password>
                 </replica>
                 <replica>
-                    <host>clickhouse-2</host>
+                    <host>clickhouse-1</host>
                     <port>9000</port>
                     <user>username</user>
                     <password>password</password>                </replica>
             </shard>
             <shard>
                 <replica>
-                    <host>clickhouse-3</host>
+                    <host>clickhouse-2</host>
                     <port>9000</port>
                     <user>username</user>
                     <password>password</password>                </replica>
                 <replica>
-                    <host>clickhouse-1</host>
+                    <host>clickhouse-0</host>
                     <port>9000</port>
                     <user>username</user>
                     <password>password</password>                </replica>
@@ -203,15 +203,15 @@
 
     <zookeeper>
         <node index="1">
-            <host>clickhouse-1</host>
+            <host>clickhouse-0</host>
             <port>2181</port>
         </node>
         <node index="2">
-            <host>clickhouse-2</host>
+            <host>clickhouse-1</host>
             <port>2181</port>
         </node>
         <node index="3">
-            <host>clickhouse-3</host>
+            <host>clickhouse-2</host>
             <port>2181</port>
         </node>
     </zookeeper>
