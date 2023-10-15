@@ -21,6 +21,7 @@
       with_items:
         - $PWD/roles/Install_Clickhouse
         - $PWD/roles/Install_Zookeper
+
       when: mode == 'clickhouse'
 
 
