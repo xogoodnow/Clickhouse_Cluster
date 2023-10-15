@@ -182,19 +182,22 @@
                     <host>clickhouse-1</host>
                     <port>9000</port>
                     <user>username</user>
-                    <password>password</password>                </replica>
+                    <password>password</password>
+                </replica>
             </shard>
             <shard>
                 <replica>
                     <host>clickhouse-2</host>
                     <port>9000</port>
                     <user>username</user>
-                    <password>password</password>                </replica>
+                    <password>password</password>
+                </replica>
                 <replica>
                     <host>clickhouse-0</host>
                     <port>9000</port>
                     <user>username</user>
-                    <password>password</password>                </replica>
+                    <password>password</password>
+                </replica>
             </shard>
         </KANG_CLICKHOUSE>
     </remote_servers>
@@ -241,6 +244,10 @@
     <distributed_ddl>
         <path>/clickhouse/task_queue/ddl/</path>
         <monitor_ddl>true</monitor_ddl>
+        <profile>default</profile>
+        <pool_size>1</pool_size>
+
+
     </distributed_ddl>
 
 
