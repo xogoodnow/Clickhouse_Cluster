@@ -1,0 +1,50 @@
+---
+- name: check connectivity
+  ping:
+    data: alive
+
+
+- name: Create the required directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0777"
+  with_items:
+    - /root/keeper/
+
+
+
+
+- name: Pull the Clickhouse_Keeper image
+  docker_image:
+    name: clickhouse/clickhouse-keeper:{{ clickhouse_keeper_version }}
+    source: pull
+
+
+- name: Set the config file for Clickhouse_Keeper instances
+  template:
+    dest: /root/keeper/keeper_config.xml
+    src: "templates/{{ item }}"
+    mode: "0777"
+  with_items:
+    - keeper_config.xml.j2
+
+
+
+- name: Run the Clickhouse_Keeper container
+  docker_container:
+    name: "{{ ansible_hostname }}-clickhouse-keeper"
+    image: clickhouse/clickhouse-keeper:{{ clickhouse_keeper_version }}
+    restart_policy: unless-stopped
+    network_mode: host
+    state: started
+    volumes:
+      - "/root/keeper/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml"
+
+
+
+
+
+
