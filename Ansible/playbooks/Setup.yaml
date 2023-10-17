@@ -15,7 +15,7 @@
         - $PWD/roles/Install_Docker
 
 
-    - name: Deploy Clickhouse and Zookeper
+    - name: Deploy Clickhouse and Clickhouse_Keeper
       include_role:
         name: "{{ item }}"
       with_items:
