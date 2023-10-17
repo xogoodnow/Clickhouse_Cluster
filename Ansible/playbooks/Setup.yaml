@@ -20,7 +20,7 @@
         name: "{{ item }}"
       with_items:
         - $PWD/roles/Install_Clickhouse
-        - $PWD/roles/Install_Zookeper
+        - $PWD/roles/Install_Clickhouse_Keeper
 
       when: mode == 'clickhouse'
 
