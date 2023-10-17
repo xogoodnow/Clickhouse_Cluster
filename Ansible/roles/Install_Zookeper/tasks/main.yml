@@ -19,7 +19,7 @@
 
 - name: Pull the Zookeper image
   docker_image:
-    name: zookeeper:{{ zookeper_version }}
+    name: zookeeper:{{ zookeeper_version }}
     source: pull
 
 
