@@ -1,5 +1,5 @@
 ---
-- name: setting up Redis cluster
+- name: setting up Clickhouse cluster
   hosts: all
   become: true
   tasks:
