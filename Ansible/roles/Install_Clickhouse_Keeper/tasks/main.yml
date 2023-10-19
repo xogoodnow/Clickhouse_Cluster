@@ -42,6 +42,9 @@
     state: started
     volumes:
       - "/root/keeper/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml"
+      - "/root/keeper/clickhouse-keeper.log:/var/log/clickhouse-keeper/clickhouse-keeper.log"
+      - "/root/keeper/clickhouse-keeper.err.log:/var/log/clickhouse-keeper/clickhouse-keeper.err.log"
+      
 
 
 
