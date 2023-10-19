@@ -23,7 +23,6 @@
     - First_table.sql.j2
     - Second_table.sql.j2
     - Shared_table.sql.j2
-docker exec -i clickhouse-0-clickhouse clickhouse-client < /root/clickhouse_sql_schema/sql.sql
 
 - name: Execute SQL commands in ClickHouse container
   command:
