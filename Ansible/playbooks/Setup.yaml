@@ -21,8 +21,16 @@
       with_items:
         - $PWD/roles/Install_Clickhouse
         - $PWD/roles/Install_Clickhouse_Keeper
-
       when: mode == 'clickhouse'
+
+
+    - name: Set up the sql schema on clickhouse instances
+      include_role:
+        name: "{{ item }}"
+      with_items:
+        - $PWD/roles/Clickhouse_Database_Setup
+      when: mode == 'clickhouse'
+
 
 
 
