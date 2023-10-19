@@ -15,6 +15,17 @@
     - /root/keeper/
 
 
+- name: Create the files for general and error log
+  file:
+    path: "{{ item }}"
+    state: touch
+    owner: root
+    group: root
+    mode: "0777"
+  with_items:
+    - /root/keeper/clickhouse-keeper.log
+    - /root/keeper/clickhouse-keeper.err.log
+
 
 
 - name: Pull the Clickhouse_Keeper image
