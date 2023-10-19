@@ -50,3 +50,6 @@ CREATE TABLE defaultdb1.industry_data
     Industry_code_ANZSIC06 String
 ) ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/{shard01}/tables/hits/industry_data', '{replica01}')
 ORDER BY (Year, Industry_code_NZSIOC, Variable_code);
+
+
+{% endif %}
