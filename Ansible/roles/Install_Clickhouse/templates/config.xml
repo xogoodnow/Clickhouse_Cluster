@@ -31,22 +31,31 @@
         </formatting>
     </logger>
 
-    <!-- <macros>
+
+
+
+
+
+    {% if ansible_play_batch.index(inventory_hostname) == 0 %}
+    <macros>
         <shard01>shard1</shard01>
         <shard02>shard2</shard02>
         <replica01>sha1_rep1</replica01>
         <replica02>sha2_rep2</replica02>
         <cluster>KANG_CLICKHOUSE</cluster>
-    </macros> -->
+    </macros>
 
-    <!-- <macros>
+    {% elif ansible_play_batch.index(inventory_hostname) == 1 %}
+    <macros>
         <shard01>shard1</shard01>
         <shard02>shard3</shard02>
         <replica01>sha1_rep2</replica01>
         <replica02>sha3_rep2</replica02>
         <cluster>KANG_CLICKHOUSE</cluster>
-    </macros> -->
+    </macros>
 
+
+    {% elif ansible_play_batch.index(inventory_hostname) == 2 %}
     <macros>
         <shard01>shard2</shard01>
         <shard02>shard3</shard02>
@@ -54,6 +63,9 @@
         <replica02>sha3_rep1</replica02>
         <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
+
+    {% endif %}
+
 
 
 
