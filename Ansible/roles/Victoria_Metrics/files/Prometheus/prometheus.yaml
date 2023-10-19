@@ -29,14 +29,14 @@ scrape_configs:
           - Clickhouse-2:9100
 
 
-  - job_name: 'Redis_exporter'
+  - job_name: 'Clickhouse_exporter'
     scrape_interval: 5s
     static_configs:
       - targets:
 
-          - Clickhouse-0:9116
-          - Clickhouse-1:9116
-          - Clickhouse-2:9116
+          - Clickhouse-0:8001
+          - Clickhouse-1:8001
+          - Clickhouse-2:8001
 
 
 
