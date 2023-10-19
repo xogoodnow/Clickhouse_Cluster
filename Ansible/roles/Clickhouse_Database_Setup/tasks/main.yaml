@@ -12,6 +12,12 @@
     mode: 0755
     state: directory
 
+- name: Copy sample data into clickhouse
+  copy:
+    src: files/annual-enterprise-survey-2021-financial-year-provisional-csv.csv
+    dest: /root/clickhouse_sql_schema/
+  when: {{ ansible_play_batch.index(inventory_hostname) }} == 0
+
 - name: Generate SQL file from template
   template:
     src: "templates/{{ item }}"
@@ -26,7 +32,7 @@
 
 
 - name: Execute SQL commands in ClickHouse container
-  command:
+  shell:
     cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c 'clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="$(cat {{ item }})"'
   with_items:
     - /root/clickhouse_sql_schema/First_db.sql_{{ ansible_hostname }}.sql
@@ -35,5 +41,15 @@
     - /root/clickhouse_sql_schema/First_table.sql_{{ ansible_hostname }}.sql
     - /root/clickhouse_sql_schema/Second_table.sql_{{ ansible_hostname }}.sql
     - /root/clickhouse_sql_schema/Shared_table.sql_{{ ansible_hostname }}.sql
+
+
+
+- name: Import data into the shared table
+  shell:
+    cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c ' cat /root/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="INSERT INTO kang.industry_data_distributed FORMAT CSV"'
+  when: { { ansible_play_batch.index(inventory_hostname) } } == 0
+
+
+
 
 
