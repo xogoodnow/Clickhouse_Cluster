@@ -24,19 +24,16 @@
     - Second_table.sql.j2
     - Shared_table.sql.j2
 
+
 - name: Execute SQL commands in ClickHouse container
   command:
-    cmd: "docker exec {{ ansible_hostname }}-clickhouse clickhouse-client -u {{ CLICKHOUSE_USER }} --password {{ CLICKHOUSE_PASSWORD }} < /root/clickhouse_sql_schema/{{ item }}_{{ ansible_hostname }}.sql)"
-  environment:
-    CLICKHOUSE_USER: "{{ CLICKHOUSE_USER }}"
-    CLICKHOUSE_PASSWORD: "{{ CLICKHOUSE_PASSWORD }}"
+    cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c 'clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="$(cat {{ item }})"'
   with_items:
     - /root/clickhouse_sql_schema/First_db.sql_{{ ansible_hostname }}.sql
     - /root/clickhouse_sql_schema/Second_db.sql_{{ ansible_hostname }}.sql
-    - /root/clickhouse_sql_schema/Shared_db.sql.j2_{{ ansible_hostname }}.sql
+    - /root/clickhouse_sql_schema/Shared_db.sql_{{ ansible_hostname }}.sql
     - /root/clickhouse_sql_schema/First_table.sql_{{ ansible_hostname }}.sql
     - /root/clickhouse_sql_schema/Second_table.sql_{{ ansible_hostname }}.sql
     - /root/clickhouse_sql_schema/Shared_table.sql_{{ ansible_hostname }}.sql
-
 
 
