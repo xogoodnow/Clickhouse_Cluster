@@ -1,0 +1,10 @@
+{% if ansible_hostname == "clickhouse-0" %}
+CREATE DATABASE IF NOT EXISTS defaultdb2;
+
+{% elif ansible_hostname == "clickhouse-1" %}
+CREATE DATABASE IF NOT EXISTS defaultdb1;
+
+{% elif ansible_hostname == "clickhouse-2" %}
+CREATE DATABASE IF NOT EXISTS defaultdb1;
+
+{% endif %}
