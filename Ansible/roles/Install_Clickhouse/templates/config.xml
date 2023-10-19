@@ -31,11 +31,30 @@
         </formatting>
     </logger>
 
-    <macros>
-        <shard>1</shard>
-        <replica_name>01</replica_name>
+    <!-- <macros>
+        <shard01>shard1</shard01>
+        <shard02>shard2</shard02>
+        <replica01>sha1_rep1</replica01>
+        <replica02>sha2_rep2</replica02>
+        <cluster>KANG_CLICKHOUSE</cluster>
+    </macros> -->
 
+    <!-- <macros>
+        <shard01>shard1</shard01>
+        <shard02>shard3</shard02>
+        <replica01>sha1_rep2</replica01>
+        <replica02>sha3_rep2</replica02>
+        <cluster>KANG_CLICKHOUSE</cluster>
+    </macros> -->
+
+    <macros>
+        <shard01>shard2</shard01>
+        <shard02>shard3</shard02>
+        <replica01>sha2_rep1</replica01>
+        <replica02>sha3_rep1</replica02>
+        <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
+
 
 
 
@@ -171,27 +190,49 @@
     </user_directories>
 
 
+
+
     <mlock_executable>true</mlock_executable>
+
 
 
 
 
     <remote_servers>
         <KANG_CLICKHOUSE>
+
             <shard>
+             <internal_replication>true</internal_replication>
                 <replica>
-                    <host>clickhouse-0</host>
+                    <default_database>defaultdb0</default_database>
+                     <host>clickhouse-0</host>
                     <port>9000</port>
                     <user>username</user>
                     <password>password</password>
                 </replica>
+
                 <replica>
+                    <default_database>defaultdb0</default_database>
+                    <host>clickhouse-1</host>
+                    <port>9000</port>
+                    <user>username</user>
+                    <password>password</password>
+                </replica>
+
+            </shard>
+
+            <shard>
+            <internal_replication>true</internal_replication>
+                <replica>
+                    <default_database>defaultdb1</default_database>
+
                     <host>clickhouse-1</host>
                     <port>9000</port>
                     <user>username</user>
                     <password>password</password>
                 </replica>
                 <replica>
+                    <default_database>defaultdb1</default_database>
                     <host>clickhouse-2</host>
                     <port>9000</port>
                     <user>username</user>
@@ -199,8 +240,27 @@
                 </replica>
             </shard>
 
+            <shard>
+            <internal_replication>true</internal_replication>
+                <replica>
+                    <default_database>defaultdb2</default_database>
+                    <host>clickhouse-2</host>
+                    <port>9000</port>
+                    <user>username</user>
+                    <password>password</password>
+                </replica>
+                <replica>
+                    <default_database>defaultdb2</default_database>
+                    <host>clickhouse-0</host>
+                    <port>9000</port>
+                    <user>username</user>
+                    <password>password</password>
+                </replica>
+            </shard>
         </KANG_CLICKHOUSE>
     </remote_servers>
+
+
 
 
 
