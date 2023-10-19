@@ -8,3 +8,5 @@ node_exporter_version: latest
 clickhouse_version: latest
 zookeeper_version: latest
 clickhouse_keeper_version: latest
+CLICKHOUSE_USER: username
+CLICKHOUSE_PASSWORD: password
