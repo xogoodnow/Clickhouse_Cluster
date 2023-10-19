@@ -18,6 +18,8 @@
     - /root/clickhouse/ch_data/
     - /var/lib/clickhouse/coordination/snapshots
     - /var/log/clickhouse/coordination/logs
+    - /root/clickhouse_sql_schema/
+
 
 
 
@@ -57,6 +59,7 @@
       - "/root/clickhouse/config.xml:/etc/clickhouse-server/config.xml"
       - "/var/log/clickhouse/coordination/logs:/var/log/clickhouse/coordination/logs"
       - "/var/lib/clickhouse/coordination/snapshots:/var/lib/clickhouse/coordination/snapshots"
+      - "/root/clickhouse_sql_schema/:/root/clickhouse_sql_schema/"
 
 
 
