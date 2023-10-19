@@ -6,26 +6,38 @@
 
 - name: create keyring directory
   file:
-    path: /root/clickhouse_db_structure/
+    path: /root/clickhouse_sql_schema/
     owner: root
     group: root
     mode: 0755
     state: directory
 
-
 - name: Generate SQL file from template
   template:
-    src: templates/clickhouse_sql.j2
-    dest: "/root/clickhouse_db_structure/clickhouse_commands_{{ ansible_hostname }}.sql"
+    src: "templates/{{ item }}"
+    dest: "/root/clickhouse_sql_schema/{{ item | replace('.j2', '') }}_{{ ansible_hostname }}.sql"
+  with_items:
+    - First_db.sql.j2
+    - Second_db.sql.j2
+    - Shared_db.sql.j2
+    - First_table.sql.j2
+    - Second_table.sql.j2
+    - Shared_table.sql.j2
+docker exec -i clickhouse-0-clickhouse clickhouse-client < /root/clickhouse_sql_schema/sql.sql
 
 - name: Execute SQL commands in ClickHouse container
   command:
-    cmd: "docker exec {{ ansible_hostname }}-clickhouse clickhouse-client -u {{ CLICKHOUSE_USER }} --password {{ CLICKHOUSE_PASSWORD }} -q \"$(cat /root/clickhouse_db_structure/clickhouse_commands_{{ ansible_hostname }}.sql)\""
+    cmd: "docker exec {{ ansible_hostname }}-clickhouse clickhouse-client -u {{ CLICKHOUSE_USER }} --password {{ CLICKHOUSE_PASSWORD }} < /root/clickhouse_sql_schema/{{ item }}_{{ ansible_hostname }}.sql)"
   environment:
-    CLICKHOUSE_USER: "username"
-    CLICKHOUSE_PASSWORD: "password"
+    CLICKHOUSE_USER: "{{ CLICKHOUSE_USER }}"
+    CLICKHOUSE_PASSWORD: "{{ CLICKHOUSE_PASSWORD }}"
+  with_items:
+    - /root/clickhouse_sql_schema/First_db.sql_{{ ansible_hostname }}.sql
+    - /root/clickhouse_sql_schema/Second_db.sql_{{ ansible_hostname }}.sql
+    - /root/clickhouse_sql_schema/Shared_db.sql.j2_{{ ansible_hostname }}.sql
+    - /root/clickhouse_sql_schema/First_table.sql_{{ ansible_hostname }}.sql
+    - /root/clickhouse_sql_schema/Second_table.sql_{{ ansible_hostname }}.sql
+    - /root/clickhouse_sql_schema/Shared_table.sql_{{ ansible_hostname }}.sql
 
-- name: Remove generated SQL file
-  file:
-    path: "/tmp/clickhouse_commands_{{ ansible_hostname }}.sql"
-    state: absent
+
+
