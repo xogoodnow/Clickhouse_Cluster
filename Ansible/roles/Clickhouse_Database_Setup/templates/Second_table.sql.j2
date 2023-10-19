@@ -1,6 +1,6 @@
 {% if ansible_hostname == "clickhouse-0" %}
 
-CREATE TABLE defaultdb2.industry_data
+CREATE TABLE IF NOT EXISTS defaultdb2.industry_data
 (
     Year UInt16,
     Industry_aggregation_NZSIOC String,
@@ -17,7 +17,7 @@ ORDER BY (Year, Industry_code_NZSIOC, Variable_code);
 
 {% elif ansible_hostname == "clickhouse-1" %}
 
-CREATE TABLE defaultdb1.industry_data
+CREATE TABLE IF NOT EXISTS defaultdb1.industry_data
 (
     Year UInt16,
     Industry_aggregation_NZSIOC String,
@@ -34,7 +34,7 @@ ORDER BY (Year, Industry_code_NZSIOC, Variable_code);
 
 {% elif ansible_hostname == "clickhouse-2" %}
 
-CREATE TABLE defaultdb2.industry_data
+CREATE TABLE IF NOT EXISTS defaultdb2.industry_data
 (
     Year UInt16,
     Industry_aggregation_NZSIOC String,
