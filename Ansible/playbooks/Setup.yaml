@@ -39,7 +39,6 @@
         name: "{{ item }}"
       with_items:
         - $PWD/roles/Node_Exporter
-      when: mode == 'monitoring'
 
     - name: Set up the monitoring stack
       include_role:
