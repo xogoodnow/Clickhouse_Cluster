@@ -2,7 +2,7 @@
 
     <logger>
         <!-- Level of detail in logging. Using 'information' for general production use. -->
-        <level>information</level>
+        <level>warning</level>
 
         <!-- Paths to log files. -->
         <log>/var/log/clickhouse-server/clickhouse-server.log</log>
@@ -118,7 +118,7 @@
     <concurrent_threads_soft_limit_num>5</concurrent_threads_soft_limit_num>
     <concurrent_threads_soft_limit_ratio_to_cores>5</concurrent_threads_soft_limit_ratio_to_cores>
 
-    <max_concurrent_queries>2000</max_concurrent_queries>
+    <max_concurrent_queries>4000</max_concurrent_queries>
 
     <max_server_memory_usage>0</max_server_memory_usage>
 
@@ -150,11 +150,11 @@
     <max_open_files>262144</max_open_files>
 
 
-    <uncompressed_cache_size>8589934592</uncompressed_cache_size>
+    <uncompressed_cache_size>17179869184</uncompressed_cache_size>
 
 
 
-    <mark_cache_size>5368709120</mark_cache_size>
+    <mark_cache_size>10737418240</mark_cache_size>
 
 
 
@@ -319,8 +319,8 @@
 
 
     <query_cache>
-        <max_size_in_bytes>1073741824</max_size_in_bytes>
-        <max_entries>1024</max_entries>
+        <max_size_in_bytes>2147483648</max_size_in_bytes>
+        <max_entries>2048</max_entries>
         <max_entry_size_in_bytes>1048576</max_entry_size_in_bytes>
         <max_entry_size_in_rows>30000000</max_entry_size_in_rows>
     </query_cache>
@@ -330,7 +330,7 @@
         <path>/clickhouse/task_queue/ddl/</path>
         <monitor_ddl>true</monitor_ddl>
         <profile>default</profile>
-        <pool_size>1</pool_size>
+        <pool_size>4</pool_size>
 
 
     </distributed_ddl>
