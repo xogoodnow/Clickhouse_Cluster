@@ -54,7 +54,10 @@
     mode: 0777
   with_items:
     - 1860.json
+    - 14192.json
+    - 14432.json
     - dashboards.yaml
+
 
 
 - name: Copy Prometheus files
