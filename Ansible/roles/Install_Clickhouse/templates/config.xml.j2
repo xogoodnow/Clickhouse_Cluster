@@ -118,7 +118,7 @@
     <concurrent_threads_soft_limit_num>5</concurrent_threads_soft_limit_num>
     <concurrent_threads_soft_limit_ratio_to_cores>5</concurrent_threads_soft_limit_ratio_to_cores>
 
-    <max_concurrent_queries>1000</max_concurrent_queries>
+    <max_concurrent_queries>2000</max_concurrent_queries>
 
     <max_server_memory_usage>0</max_server_memory_usage>
 
@@ -129,14 +129,14 @@
     <!-- Configure other thread pools: -->
     <background_buffer_flush_schedule_pool_size>8</background_buffer_flush_schedule_pool_size>
     <background_pool_size>32</background_pool_size>
-    <background_merges_mutations_concurrency_ratio>2</background_merges_mutations_concurrency_ratio>
+    <background_merges_mutations_concurrency_ratio>4</background_merges_mutations_concurrency_ratio>
     <background_merges_mutations_scheduling_policy>oldest</background_merges_mutations_scheduling_policy>
-    <background_move_pool_size>4</background_move_pool_size>
-    <background_fetches_pool_size>8</background_fetches_pool_size>
+    <background_move_pool_size>16</background_move_pool_size>
+    <background_fetches_pool_size>16</background_fetches_pool_size>
     <background_common_pool_size>4</background_common_pool_size>
     <background_schedule_pool_size>64</background_schedule_pool_size>
-    <background_message_broker_schedule_pool_size>4</background_message_broker_schedule_pool_size>
-    <background_distributed_schedule_pool_size>8</background_distributed_schedule_pool_size>
+    <background_message_broker_schedule_pool_size>8</background_message_broker_schedule_pool_size>
+    <background_distributed_schedule_pool_size>16</background_distributed_schedule_pool_size>
 
 
 
@@ -159,12 +159,11 @@
 
 
 
-    <mmap_cache_size>1000</mmap_cache_size>
+    <mmap_cache_size>3000</mmap_cache_size>
 
 
 
 
-    <mmap_cache_size>1000</mmap_cache_size>
 
     <!-- Cache size in bytes for compiled expressions.-->
     <compiled_expression_cache_size>134217728</compiled_expression_cache_size>
