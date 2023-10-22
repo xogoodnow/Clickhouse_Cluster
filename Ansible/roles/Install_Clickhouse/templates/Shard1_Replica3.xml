@@ -51,10 +51,10 @@
 
 
     <macros>
-        <shard01>shard1</shard01>
-        <replica01>sha1_rep1</replica01>
-        <replica02>sha1_rep2</replica02>
-        <replica03>sha1_rep3</replica03>
+        <shard01>shard01</shard01>
+        <replica01>shard01_rep01</replica01>
+        <replica02>shard01_rep02</replica02>
+        <replica03>shard01_rep03</replica03>
         <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
 
