@@ -95,7 +95,7 @@ select * from kang.industry_data_distributed
 
 
 * Checking the monitoring stack
-* > **Note**
+> **Note**
 > All dashboard are provisioned 
 > To add custom dashbaord on load, add it to /Ansible/roles/Victoria_Metrics/files/Grafana/provisioning/dashboards as a .json file. It would automatically be loaded to Grafana
 > Just keep in mind that you have to also copy the dashbaord using ansible to the remote destination
