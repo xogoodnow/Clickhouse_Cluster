@@ -87,6 +87,9 @@ select * from system.clusters
 clickhouse-client 
 select * from kang.industry_data_distributed
 ```
+> **Note**
+> Keep in mind that because of the replication engine which is being used in the demo db, each node only returns the chunk of data which it has and not the whole thing
+> 
 ![image](https://s3.ir-thr-at1.arvanstorage.ir/kangclickhouse/clickhouse_view_sample_data.gif)
 
 
