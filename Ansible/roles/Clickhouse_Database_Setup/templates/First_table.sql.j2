@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS defaultdb1.industry_data
     Variable_category String,
     Value String,
     Industry_code_ANZSIC06 String
-) ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/{shard01}/tables/hits/industry_data', '{replica01}')
+) ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/{shard02}/tables/hits/industry_data', '{replica01}')
 ORDER BY (Year, Industry_code_NZSIOC, Variable_code)
 
 
