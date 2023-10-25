@@ -62,7 +62,7 @@
     {% elif ansible_play_batch.index(inventory_hostname) == 1 %}
     <macros>
         <shard01>shard1</shard01>
-        <shard02>shard3</shard02>
+        <shard03>shard3</shard03>
         <replica01>sha1_rep2</replica01>
         <replica02>sha3_rep2</replica02>
         <cluster>KANG_CLICKHOUSE</cluster>
@@ -71,8 +71,8 @@
 
     {% elif ansible_play_batch.index(inventory_hostname) == 2 %}
     <macros>
-        <shard01>shard2</shard01>
-        <shard02>shard3</shard02>
+        <shard02>shard2</shard02>
+        <shard03>shard3</shard03>
         <replica01>sha2_rep1</replica01>
         <replica02>sha3_rep1</replica02>
         <cluster>KANG_CLICKHOUSE</cluster>
