@@ -39,7 +39,7 @@
 
 - name: Import data into the shared table
   shell:
-    cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c ' cat /root/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="INSERT INTO kang.industry_data_distributed FORMAT CSV"'
+    cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c ' cat /root/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="INSERT INTO kang.kangtable FORMAT CSV"'
 
 
 
