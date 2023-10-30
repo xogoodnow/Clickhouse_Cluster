@@ -1,0 +1,16 @@
+CREATE TABLE kang.kangtable ON CLUSTER KANG_CLICKHOUSE
+(
+    `Year` Int32,
+    `Industry_aggregation_NZSIOC` String,
+    `Industry_code_NZSIOC` String,
+    `Industry_name_NZSIOC` String,
+    `Units` String,
+    `Variable_code` String,
+    `Variable_name` String,
+    `Variable_category` String,
+    `Value` String,
+    `Industry_code_ANZSIC06` String
+)
+ENGINE = ReplicatedMergeTree('/clickhouse/tables/{shard}/kangtable', '{replica}')
+ORDER BY Year
+SETTINGS index_granularity = 8192
