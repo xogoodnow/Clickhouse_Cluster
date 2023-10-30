@@ -1,0 +1,65 @@
+{% if ansible_hostname == "clickhouse-0" %}
+
+
+CREATE TABLE IF NOT EXISTS defaultdb2.industry_data
+(
+    Year UInt32,
+    Industry_aggregation_NZSIOC String,
+    Industry_code_NZSIOC String,
+    Industry_name_NZSIOC String,
+    Units String,
+    Variable_code String,
+    Variable_name String,
+    Variable_category String,
+    Value String,
+    Industry_code_ANZSIC06 String
+) ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/{shard02}/tables/hits/industry_data', '{replica02}')
+ORDER BY (Year, Industry_code_NZSIOC, Variable_code)
+
+
+
+
+{% elif ansible_hostname == "clickhouse-1" %}
+
+
+CREATE TABLE IF NOT EXISTS defaultdb1.industry_data
+(
+    Year UInt32,
+    Industry_aggregation_NZSIOC String,
+    Industry_code_NZSIOC String,
+    Industry_name_NZSIOC String,
+    Units String,
+    Variable_code String,
+    Variable_name String,
+    Variable_category String,
+    Value String,
+    Industry_code_ANZSIC06 String
+) ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/{shard03}/tables/hits/industry_data', '{replica02}')
+ORDER BY (Year, Industry_code_NZSIOC, Variable_code)
+
+
+
+
+{% elif ansible_hostname == "clickhouse-2" %}
+
+
+
+CREATE TABLE IF NOT EXISTS defaultdb2.industry_data
+(
+    Year UInt32,
+    Industry_aggregation_NZSIOC String,
+    Industry_code_NZSIOC String,
+    Industry_name_NZSIOC String,
+    Units String,
+    Variable_code String,
+    Variable_name String,
+    Variable_category String,
+    Value String,
+    Industry_code_ANZSIC06 String
+) ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/{shard03}/tables/hits/industry_data', '{replica02}')
+ORDER BY (Year, Industry_code_NZSIOC, Variable_code)
+
+
+{% endif %}
+
+
