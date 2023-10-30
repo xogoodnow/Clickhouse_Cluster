@@ -25,10 +25,10 @@
   with_items:
     - First_db.sql.j2
     - Second_db.sql.j2
-    - Shared_db.sql.j2
+    - On_Cluster_DB.sql.j2
     - First_table.sql.j2
     - Second_table.sql.j2
-    - Shared_table.sql.j2
+    - On_Cluster_Table.sql.j2
 
 
 - name: Execute SQL commands in ClickHouse container
