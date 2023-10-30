@@ -50,6 +50,7 @@
     {% if ansible_play_batch.index(inventory_hostname) == 0 %}
 
    <macros>
+        <shard>01</shard>
         <replica>clickhouse-0</replica>
         <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
@@ -57,12 +58,14 @@
     {% elif ansible_play_batch.index(inventory_hostname) == 1 %}
 
     <macros>
+        <shard>01</shard>
         <replica>clickhouse-1</replica>
         <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
 
     {% elif ansible_play_batch.index(inventory_hostname) == 2 %}
    <macros>
+        <shard>01</shard>
         <replica>clickhouse-2</replica>
         <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
