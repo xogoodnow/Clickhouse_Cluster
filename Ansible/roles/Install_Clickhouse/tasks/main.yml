@@ -45,7 +45,7 @@
     network_mode: host
     state: started
     env:
-      CLICKHOUSE_DB: "my_database"
+      
       CLICKHOUSE_USER: "{{ CLICKHOUSE_USER }}"
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
       CLICKHOUSE_PASSWORD: "{{ CLICKHOUSE_PASSWORD }}"
