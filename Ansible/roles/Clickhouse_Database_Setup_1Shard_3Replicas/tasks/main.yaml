@@ -16,7 +16,6 @@
   copy:
     src: files/annual-enterprise-survey-2021-financial-year-provisional-csv.csv
     dest: /root/clickhouse_sql_schema/
-  when: ansible_play_batch.index(inventory_hostname) == 0
 
 - name: Generate SQL file from template
   template:
@@ -25,7 +24,6 @@
   with_items:
     - On_Cluster_DB.sql.j2
     - On_Cluster_Table.sql.j2
-  when: ansible_play_batch.index(inventory_hostname) == 0
 
 
 
@@ -35,7 +33,6 @@
   with_items:
     - /root/clickhouse_sql_schema/On_Cluster_DB.sql_{{ ansible_hostname }}.sql
     - /root/clickhouse_sql_schema/On_Cluster_Table.sql_{{ ansible_hostname }}.sql
-  when: ansible_play_batch.index(inventory_hostname) == 0
 
 
 
@@ -43,7 +40,6 @@
 - name: Import data into the shared table
   shell:
     cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c ' cat /root/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="INSERT INTO kang.industry_data_distributed FORMAT CSV"'
-  when: ansible_play_batch.index(inventory_hostname) == 0
 
 
 
