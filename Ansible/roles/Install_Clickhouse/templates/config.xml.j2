@@ -47,38 +47,28 @@
         <asynchronous_metrics_frequency>60</asynchronous_metrics_frequency>
     </prometheus>
 
-
-
-
     {% if ansible_play_batch.index(inventory_hostname) == 0 %}
-    <macros>
-        <shard01>shard1</shard01>
-        <shard02>shard2</shard02>
-        <replica01>sha1_rep1</replica01>
-        <replica02>sha2_rep2</replica02>
+
+   <macros>
+        <replica>clickhouse-0</replica>
         <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
 
     {% elif ansible_play_batch.index(inventory_hostname) == 1 %}
+
     <macros>
-        <shard01>shard1</shard01>
-        <shard03>shard3</shard03>
-        <replica01>sha1_rep2</replica01>
-        <replica02>sha3_rep2</replica02>
+        <replica>clickhouse-1</replica>
         <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
 
-
     {% elif ansible_play_batch.index(inventory_hostname) == 2 %}
-    <macros>
-        <shard02>shard2</shard02>
-        <shard03>shard3</shard03>
-        <replica01>sha2_rep1</replica01>
-        <replica02>sha3_rep1</replica02>
+   <macros>
+        <replica>clickhouse-2</replica>
         <cluster>KANG_CLICKHOUSE</cluster>
     </macros>
 
     {% endif %}
+
 
 
 
@@ -221,70 +211,31 @@
 
 
 
-
-
-    <remote_servers>
-        <KANG_CLICKHOUSE>
-
-            <shard>
-             <internal_replication>true</internal_replication>
-                <replica>
-                    <default_database>defaultdb0</default_database>
-                     <host>clickhouse-0</host>
-                    <port>9000</port>
-                    <user>username</user>
-                    <password>password</password>
-                </replica>
-
-                <replica>
-                    <default_database>defaultdb0</default_database>
-                    <host>clickhouse-1</host>
-                    <port>9000</port>
-                    <user>username</user>
-                    <password>password</password>
-                </replica>
-
-            </shard>
-
-            <shard>
+<remote_servers>
+    <KANG_CLICKHOUSE>
+        <shard>
             <internal_replication>true</internal_replication>
-                <replica>
-                    <default_database>defaultdb1</default_database>
-
-                    <host>clickhouse-1</host>
-                    <port>9000</port>
-                    <user>username</user>
-                    <password>password</password>
-                </replica>
-                <replica>
-                    <default_database>defaultdb1</default_database>
-                    <host>clickhouse-2</host>
-                    <port>9000</port>
-                    <user>username</user>
-                    <password>password</password>
-                </replica>
-            </shard>
-
-            <shard>
-            <internal_replication>true</internal_replication>
-                <replica>
-                    <default_database>defaultdb2</default_database>
-                    <host>clickhouse-2</host>
-                    <port>9000</port>
-                    <user>username</user>
-                    <password>password</password>
-                </replica>
-                <replica>
-                    <default_database>defaultdb2</default_database>
-                    <host>clickhouse-0</host>
-                    <port>9000</port>
-                    <user>username</user>
-                    <password>password</password>
-                </replica>
-            </shard>
-        </KANG_CLICKHOUSE>
-    </remote_servers>
-
+            <replica>
+                <host>clickhouse-0</host>
+                <port>9000</port>
+                <user>username</user>
+                <password>password</password>
+            </replica>
+            <replica>
+                <host>clickhouse-1</host>
+                <port>9000</port>
+                <user>username</user>
+                <password>password</password>
+            </replica>
+            <replica>
+                <host>clickhouse-2</host>
+                <port>9000</port>
+                <user>username</user>
+                <password>password</password>
+            </replica>
+        </shard>
+    </KANG_CLICKHOUSE>
+</remote_servers>
 
 
 
@@ -337,3 +288,5 @@
 
 
 </clickhouse>
+
+
