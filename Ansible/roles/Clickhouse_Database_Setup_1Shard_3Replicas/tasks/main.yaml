@@ -1,0 +1,51 @@
+---
+- name: Check for connectivity
+  ping:
+    data: alive
+
+
+- name: create keyring directory
+  file:
+    path: /root/clickhouse_sql_schema/
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: Copy sample data into clickhouse
+  copy:
+    src: files/annual-enterprise-survey-2021-financial-year-provisional-csv.csv
+    dest: /root/clickhouse_sql_schema/
+  when: ansible_play_batch.index(inventory_hostname) == 0
+
+- name: Generate SQL file from template
+  template:
+    src: "templates/{{ item }}"
+    dest: "/root/clickhouse_sql_schema/{{ item | replace('.j2', '') }}_{{ ansible_hostname }}.sql"
+  with_items:
+    - On_Cluster_DB.sql.j2
+    - On_Cluster_Table.sql.j2
+  when: ansible_play_batch.index(inventory_hostname) == 0
+
+
+
+- name: Execute SQL commands in ClickHouse container
+  shell:
+    cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c 'clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="$(cat {{ item }})"'
+  with_items:
+    - /root/clickhouse_sql_schema/On_Cluster_DB.sql_{{ ansible_hostname }}.sql
+    - /root/clickhouse_sql_schema/On_Cluster_Table.sql_{{ ansible_hostname }}.sql
+  when: ansible_play_batch.index(inventory_hostname) == 0
+
+
+
+
+- name: Import data into the shared table
+  shell:
+    cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c ' cat /root/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="INSERT INTO kang.industry_data_distributed FORMAT CSV"'
+  when: ansible_play_batch.index(inventory_hostname) == 0
+
+
+
+
+
