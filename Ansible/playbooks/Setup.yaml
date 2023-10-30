@@ -28,8 +28,8 @@
       include_role:
         name: "{{ item }}"
       with_items:
-        - $PWD/roles/Clickhouse_Database_Setup
-      when: mode == 'clickhouse'
+        - $PWD/roles/Clickhouse_Database_Setup_1Shard_3Replicas
+      when: init_cluster == 'true'
 
 
 
