@@ -1,4 +1,4 @@
-CREATE TABLE kang.kangtable ON CLUSTER KANG_CLICKHOUSE
+CREATE TABLE IF NOT EXISTS kang.kangtable ON CLUSTER KANG_CLICKHOUSE
 (
     `Year` Int32,
     `Industry_aggregation_NZSIOC` String,
