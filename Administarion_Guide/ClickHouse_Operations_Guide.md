@@ -153,6 +153,7 @@
     - Explanation: Executes queries over a distributed set of nodes. Enhances performance and scalability for large datasets.
 
 
+
 30. **Handling Large Arrays**
     - Command: `SELECT arrayJoin(myArray) AS item FROM myArrayTable WHERE has(myArray, 'desiredValue')`
     - Explanation: Manipulates and queries large arrays stored in tables. Useful for complex data structures and analytics.
