@@ -29,6 +29,8 @@
       - gpg
       - lsb-release
       - telnet
+      - docker-compose
+      - unzip
     state: present
 
 
