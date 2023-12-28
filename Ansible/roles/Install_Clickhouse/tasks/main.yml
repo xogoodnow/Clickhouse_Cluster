@@ -38,13 +38,13 @@
 
 
 
-- name: Set the compose file for clickhouse keeper
+- name: Set the compose file for clickhouse
   template:
     src: "templates/docker-compose.yaml.j2"
     dest: "/root/clickhouse/docker-compose.yaml"
 
 
-- name: Run the container for clickhouse keeper
+- name: Run the container for clickhouse
   community.general.docker_compose:
     project_src: "/root/clickhouse/"
     pull: true

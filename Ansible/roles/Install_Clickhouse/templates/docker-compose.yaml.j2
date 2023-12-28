@@ -2,7 +2,7 @@ version: "3.8"
 services:
   clickhouse:
     container_name: "clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}"
-    image: "clickhouse/clickhouse-server: {{ clickhouse_version }}"
+    image: "clickhouse/clickhouse-server:{{ clickhouse_version }}"
     volumes:
         - "/root/clickhouse/ch_data:/var/lib/clickhouse/"
         - "/root/clickhouse/ch_logs:/var/log/clickhouse-server/"
