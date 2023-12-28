@@ -29,7 +29,7 @@
 
 - name: Execute SQL commands in ClickHouse container
   shell:
-    cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c 'clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="$(cat {{ item }})"'
+    cmd: docker exec -i "clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}" bash -c 'clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="$(cat {{ item }})"'
   with_items:
     - /root/clickhouse_sql_schema/On_Cluster_DB.sql_{{ ansible_hostname }}.sql
     - /root/clickhouse_sql_schema/On_Cluster_Table.sql_{{ ansible_hostname }}.sql
@@ -39,7 +39,7 @@
 
 - name: Import data into the shared table
   shell:
-    cmd: docker exec -i "{{ ansible_hostname }}-clickhouse" bash -c ' cat /root/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="INSERT INTO kang.kangtable FORMAT CSV"'
+    cmd: docker exec -i "clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}" bash -c ' cat /root/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u "{{ CLICKHOUSE_USER }}" --password "{{ CLICKHOUSE_PASSWORD }}" --query="INSERT INTO kang.kangtable FORMAT CSV"'
 
 
 
