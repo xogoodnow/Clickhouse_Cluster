@@ -44,20 +44,40 @@
 
 
 
-- name: Run the Clickhouse_Keeper container
-  docker_container:
-    name: "{{ ansible_hostname }}-clickhouse-keeper"
-    image: clickhouse/clickhouse-keeper:{{ clickhouse_keeper_version }}
-    restart_policy: unless-stopped
-    network_mode: host
-    state: started
-    volumes:
-      - "/root/keeper/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml"
-      - "/root/keeper/clickhouse-keeper.log:/var/log/clickhouse-keeper/clickhouse-keeper.log"
-      - "/root/keeper/clickhouse-keeper.err.log:/var/log/clickhouse-keeper/clickhouse-keeper.err.log"
+- name: Set the compose file for clickhouse keeper
+  template:
+    src: "templates/docker-compose.yaml.j2"
+    dest: "/root/keeper/docker-compose.yaml"
+
+
+- name: Run the container for clickhouse keeper
+  community.general.docker_compose:
+    project_src: "/root/keeper/"
+    pull: true
+    recreate: never
+    state: present
+    restarted: false
+    remove_orphans: no
+    remove_volumes: false
 
 
 
+
+
+#- name: Run the Clickhouse_Keeper container
+#  docker_container:
+#    name: "{{ ansible_hostname }}-clickhouse-keeper"
+#    image: clickhouse/clickhouse-keeper:{{ clickhouse_keeper_version }}
+#    restart_policy: unless-stopped
+#    network_mode: host
+#    state: started
+#    volumes:
+#      - "/root/keeper/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml"
+#      - "/root/keeper/clickhouse-keeper.log:/var/log/clickhouse-keeper/clickhouse-keeper.log"
+#      - "/root/keeper/clickhouse-keeper.err.log:/var/log/clickhouse-keeper/clickhouse-keeper.err.log"
+#
+#
+#
 
 
 
