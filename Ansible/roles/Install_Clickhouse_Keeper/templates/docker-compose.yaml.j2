@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  clickhouse-keeper:
+    container_name: "clickhouse-keeper-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}"
+    image: "clickhouse/clickhouse-keeper:{{ clickhouse_keeper_version }}"
+    volumes:
+      - "/root/keeper/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml"
+      - "/root/keeper/clickhouse-keeper.log:/var/log/clickhouse-keeper/clickhouse-keeper.log"
+      - "/root/keeper/clickhouse-keeper.err.log:/var/log/clickhouse-keeper/clickhouse-keeper.err.log"
+    restart: unless-stopped
+    network_mode: host
+
