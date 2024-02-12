@@ -18,6 +18,6 @@ services:
         soft: 262144
         hard: 262144
     environment:
-      CLICKHOUSE_USER: "{{ CLICKHOUSE_USER }}"
+      CLICKHOUSE_USER: "{{ clickhouse_user }}"
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
-      CLICKHOUSE_PASSWORD: "{{ CLICKHOUSE_PASSWORD }}"
+      CLICKHOUSE_PASSWORD: "{{ clickhouse_password }}"
