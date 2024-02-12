@@ -8,14 +8,14 @@
         <size>1000M</size>
         <count>10</count>
     </logger>
-    <max_connections>4096</max_connections>
-    <listen_host>0.0.0.0</listen_host>
+    <max_connections>{{ clickhouse_keeper_max_con }}</max_connections>
+    <listen_host>{{ clickhouse_keeper_listening_address  }}</listen_host>
     
     <keeper_server>
-        <tcp_port>2181</tcp_port>
+        <tcp_port>{{ clickhouse_keeper_listening_port }}</tcp_port>
         <server_id>{{ ansible_play_batch.index(inventory_hostname) + 1 }}</server_id>
-        <log_storage_path>/var/lib/clickhouse/coordination/log</log_storage_path>
-        <snapshot_storage_path>/var/lib/clickhouse/coordination/snapshots</snapshot_storage_path>
+        <log_storage_path>{{ clickhouse_keeper_coordination_log_storage_path_on_container }}</log_storage_path>
+        <snapshot_storage_path>{{ clickhouse_keeper_coordination_snapshot_path_on_container }}</snapshot_storage_path>
 
         <coordination_settings>
             <operation_timeout_ms>10000</operation_timeout_ms>
@@ -26,18 +26,18 @@
         <raft_configuration>
             <server>
                 <id>1</id>
-                <hostname>clickhouse-0</hostname>
-                <port>9234</port>
+                <hostname>clickhouse-1</hostname>
+                <port>{{ clickhouse_keeper_raft_port }}</port>
             </server>
             <server>
                 <id>2</id>
-                <hostname>clickhouse-1</hostname>
-                <port>9234</port>
+                <hostname>clickhouse-2</hostname>
+                <port>{{ clickhouse_keeper_raft_port }}</port>
             </server>
             <server>
                 <id>3</id>
-                <hostname>clickhouse-2</hostname>
-                <port>9234</port>
+                <hostname>clickhouse-3</hostname>
+                <port>{{ clickhouse_keeper_raft_port  }}</port>
             </server>
         </raft_configuration>
     </keeper_server>

@@ -19,3 +19,12 @@ clickhouse_keeper_log_file_path_on_host: /var/log/clickhouse-keeper/clickhouse-k
 clickhouse_keeper_log_file_path_on_container: /var/log/clickhouse-keeper/clickhouse-keeper.log
 clickhouse_keeper_error_file_path_on_host: /var/log/clickhouse-keeper/clickhouse-keeper.err.log
 clickhouse_keeper_error_file_path_on_container:  /var/log/clickhouse-keeper/clickhouse-keeper.err.log
+clickhouse_keeper_max_con: 4096
+clickhouse_keeper_listening_address: 0.0.0.0
+clickhouse_keeper_listening_port: 2181
+clickhouse_keeper_coordination_log_storage_path_on_host: /var/lib/clickhouse/coordination/log
+clickhouse_keeper_coordination_log_storage_path_on_container: /var/lib/clickhouse/coordination/log
+clickhouse_keeper_coordination_snapshot_path_on_host: /var/lib/clickhouse/coordination/snapshots
+clickhouse_keeper_coordination_snapshot_path_on_container: /var/lib/clickhouse/coordination/snapshots
+clickhouse_keeper_raft_port: 9234
+
