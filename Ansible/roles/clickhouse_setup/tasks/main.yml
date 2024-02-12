@@ -6,19 +6,19 @@
 
 - name: Create the required directories
   file:
-    path: "{{ item }}"
+    path: "{{ clickhouse_base_directory_path }}{{ item }}"
     state: directory
     owner: root
     group: root
     force: true
     mode: "0777"
   with_items:
-    - /root/clickhouse/
-    - /root/clickhouse/ch_logs/
-    - /root/clickhouse/ch_data/
+    - clickhouse/
+    - clickhouse/ch_logs/
+    - clickhouse/ch_data/
     - /var/lib/clickhouse/coordination/snapshots
     - /var/log/clickhouse/coordination/logs
-    - /root/clickhouse_sql_schema/
+    - clickhouse_sql_schema/
 
 
 
@@ -31,7 +31,7 @@
 
 - name: Set the config file for Redis master instances
   template:
-    dest: /root/clickhouse/config.xml
+    dest: "{{ clickhouse_base_directory_path }}clickhouse/config.xml"
     src: templates/config.xml.j2
     mode: "0777"
 
@@ -41,12 +41,12 @@
 - name: Set the compose file for clickhouse
   template:
     src: "templates/docker-compose.yaml.j2"
-    dest: "/root/clickhouse/docker-compose.yaml"
+    dest: "{{ clickhouse_base_directory_path }}clickhouse/docker-compose.yaml"
 
 
 - name: Run the container for clickhouse
   community.general.docker_compose:
-    project_src: "/root/clickhouse/"
+    project_src: "{{ clickhouse_base_directory_path }}clickhouse/"
     pull: true
     recreate: never
     state: present

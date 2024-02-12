@@ -6,14 +6,14 @@
 
 - name: Create the required directories
   file:
-    path: "{{ item }}"
+    path: "{{ clickhouse_base_directory_path }}{{ item }}"
     state: directory
     owner: root
     group: root
     mode: "0777"
   with_items:
-    - /root/zookeper/
-    - /root/zookeper/data/zookeper
+    - zookeper/
+    - zookeper/data/zookeper
 
 
 
@@ -25,7 +25,7 @@
 
 - name: Set the config file for Zookeper instances
   template:
-    dest: /root/zookeper/zoo.cfg
+    dest: "{{ clickhouse_base_directory_path }}zookeper/zoo.cfg"
     src: "templates/{{ item }}"
     mode: "0777"
   with_items:
@@ -33,7 +33,7 @@
 
 - name: Set the myid file for Zookeper instances
   template:
-    dest: /root/zookeper/data/myid
+    dest: {{ clickhouse_base_directory_path }}zookeper/data/myid
     src: "templates/{{ item }}"
     mode: "0777"
   with_items:
@@ -49,8 +49,8 @@
     network_mode: host
     state: started
     volumes:
-      - "/root/zookeper/zoo.cfg:/conf/zoo.cfg"
-      - "/root/zookeper/data/:/data"
+      - "{{ clickhouse_base_directory_path }}zookeper/zoo.cfg:/conf/zoo.cfg"
+      - "{{ clickhouse_base_directory_path }}zookeper/data/:/data"
 
 
 

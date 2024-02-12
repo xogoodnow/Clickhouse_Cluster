@@ -6,25 +6,25 @@
 
 - name: Create the required directories
   file:
-    path: "{{ item }}"
+    path: "{{ clickhouse_base_directory_path }}{{ item }}"
     state: directory
     owner: root
     group: root
     mode: "0777"
   with_items:
-    - /root/keeper/
+    - /keeper/
 
 
 - name: Create the files for general and error log
   file:
-    path: "{{ item }}"
+    path: "{{ clickhouse_base_directory_path }}{{ item }}"
     state: touch
     owner: root
     group: root
     mode: "0777"
   with_items:
-    - /root/keeper/clickhouse-keeper.log
-    - /root/keeper/clickhouse-keeper.err.log
+    - keeper/clickhouse-keeper.log
+    - keeper/clickhouse-keeper.err.log
 
 
 
@@ -36,7 +36,7 @@
 
 - name: Set the config file for Clickhouse_Keeper instances
   template:
-    dest: /root/keeper/keeper_config.xml
+    dest: "{{ clickhouse_base_directory_path }}keeper/keeper_config.xml"
     src: "templates/{{ item }}"
     mode: "0777"
   with_items:
@@ -47,12 +47,12 @@
 - name: Set the compose file for clickhouse keeper
   template:
     src: "templates/docker-compose.yaml.j2"
-    dest: "/root/keeper/docker-compose.yaml"
+    dest: "{{ clickhouse_base_directory_path }}keeper/docker-compose.yaml"
 
 
 - name: Run the container for clickhouse keeper
   community.general.docker_compose:
-    project_src: "/root/keeper/"
+    project_src: "{{ clickhouse_base_directory_path }}keeper/"
     pull: true
     recreate: never
     state: present
