@@ -4,9 +4,9 @@ services:
     container_name: "clickhouse-keeper-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) + 1 }}"
     image: "{{ clickhouse_keeper_base_image }}:{{ clickhouse_keeper_version }}"
     volumes:
-      - "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Config/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml"
-      - "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Logs/clickhouse-keeper.log:/var/log/clickhouse-keeper/clickhouse-keeper.log"
-      - "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Logs/clickhouse-keeper.err.log:/var/log/clickhouse-keeper/clickhouse-keeper.err.log"
+      - "{{ clickhouse_base_directory_path }}{{ clickhouse_keeper_config_path_on_host }}:{{ clickhouse_keeper_config_path_on_container }}"
+      - "{{ clickhouse_base_directory_path }}{{ clickhouse_keeper_log_file_path_on_host }}:{{ clickhouse_keeper_log_file_path_on_container }}"
+      - "{{ clickhouse_base_directory_path }}{{ clickhouse_keeper_error_file_path_on_host }}:{{ clickhouse_keeper_error_file_path_on_container }}"
     restart: unless-stopped
     network_mode: host
 
