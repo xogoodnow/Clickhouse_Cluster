@@ -11,3 +11,7 @@ clickhouse_keeper_version: latest
 clickhouse_user: username
 clickhouse_password: password
 clickhouse_base_directory_path: /root/
+clickhouse_test_database_name: click
+clickhouse_test_table_name: clicktable
+clickhouse_test_cluster_name: CLICKHOUSE_CLUSTER
+
