@@ -15,4 +15,7 @@ clickhouse_test_table_name: clicktable
 clickhouse_test_cluster_name: CLICKHOUSE_CLUSTER
 clickhouse_keeper_base_image: clickhouse/clickhouse-keeper
 clickhouse_keeper_version: latest
-
+clickhouse_keeper_log_file_path_on_host: /var/log/clickhouse-keeper/clickhouse-keeper.log
+clickhouse_keeper_log_file_path_on_container: /var/log/clickhouse-keeper/clickhouse-keeper.log
+clickhouse_keeper_error_file_path_on_host: /var/log/clickhouse-keeper/clickhouse-keeper.err.log
+clickhouse_keeper_error_file_path_on_container:  /var/log/clickhouse-keeper/clickhouse-keeper.err.log

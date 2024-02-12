@@ -2,8 +2,8 @@
     <logger>
 
         <level>trace</level>
-        <log>/var/log/clickhouse-keeper/clickhouse-keeper.log</log>
-        <errorlog>/var/log/clickhouse-keeper/clickhouse-keeper.err.log</errorlog>
+        <log>{{ clickhouse_keeper_log_file_path_on_container }}</log>
+        <errorlog>{{ clickhouse_keeper_error_file_path_on_container }}</errorlog>
 
         <size>1000M</size>
         <count>10</count>
