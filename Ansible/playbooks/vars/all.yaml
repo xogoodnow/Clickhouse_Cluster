@@ -10,3 +10,4 @@ zookeeper_version: latest
 clickhouse_keeper_version: latest
 clickhouse_user: username
 clickhouse_password: password
+clickhouse_base_directory_path: /root/
