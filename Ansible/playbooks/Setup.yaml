@@ -10,17 +10,17 @@
       include_role:
         name: "{{ item }}"
       with_items:
-        - $PWD/roles/Pre_Setup
-        - $PWD/roles/OS_Tuning
-        - $PWD/roles/Install_Docker
+        - $PWD/roles/pre_setup
+        - $PWD/roles/os_tuning
+        - $PWD/roles/install_docker
 
 
     - name: Deploy Clickhouse and Clickhouse_Keeper
       include_role:
         name: "{{ item }}"
       with_items:
-        - $PWD/roles/Install_Clickhouse
-        - $PWD/roles/Install_Clickhouse_Keeper
+        - $PWD/roles/install_clickhouse
+        - $PWD/roles/install_clickhouse_keeper
       when: mode == 'clickhouse'
 
 
@@ -28,7 +28,7 @@
       include_role:
         name: "{{ item }}"
       with_items:
-        - $PWD/roles/Clickhouse_Database_Setup_1Shard_3Replicas
+        - $PWD/roles/clickhouse_database_setup_1shard_3replicas
       when: init_cluster == 'true'
 
 
@@ -38,13 +38,13 @@
       include_role:
         name: "{{ item }}"
       with_items:
-        - $PWD/roles/Node_Exporter
+        - $PWD/roles/node_exporter
 
     - name: Set up the monitoring stack
       include_role:
         name: "{{ item }}"
       with_items:
-        - $PWD/roles/Victoria_Metrics
+        - $PWD/roles/victoria_metrics
       when: mode == 'monitoring'
 
 
