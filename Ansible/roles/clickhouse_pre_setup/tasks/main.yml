@@ -12,73 +12,29 @@
     group: root
     mode: "0777"
   with_items:
-    - /keeper/
+    - /Clickhouse/
+    - /Clickhouse/Logs/
+    - /Clickhouse/Data/
+    - /Clickhouse/Docker/
+    - /Clickhouse/Config/
+    - /Clickhouse/Config/Certs
+    - /Clickhouse/Exporter/
+    - /Clickhouse/Exporter/Docker
+    - /Clickhouse/Keeper/
+    - /Clickhouse/Keeper/Logs/
+    - /Clickhouse/Clickhouse_SQL_schema/
+    - /var/lib/clickhouse/coordination/snapshots
+    - /var/log/clickhouse/coordination/logs
 
 
-- name: Create the files for general and error log
+
+- name: Create the files for general and error log files
   file:
-    path: "{{ clickhouse_base_directory_path }}{{ item }}"
+    path: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Logs/{{ item }}"
     state: touch
     owner: root
     group: root
     mode: "0777"
   with_items:
-    - keeper/clickhouse-keeper.log
-    - keeper/clickhouse-keeper.err.log
-
-
-
-- name: Pull the Clickhouse_Keeper image
-  docker_image:
-    name: clickhouse/clickhouse-keeper:{{ clickhouse_keeper_version }}
-    source: pull
-
-
-- name: Set the config file for Clickhouse_Keeper instances
-  template:
-    dest: "{{ clickhouse_base_directory_path }}keeper/keeper_config.xml"
-    src: "templates/{{ item }}"
-    mode: "0777"
-  with_items:
-    - keeper_config.xml.j2
-
-
-
-- name: Set the compose file for clickhouse keeper
-  template:
-    src: "templates/docker-compose.yaml.j2"
-    dest: "{{ clickhouse_base_directory_path }}keeper/docker-compose.yaml"
-
-
-- name: Run the container for clickhouse keeper
-  community.general.docker_compose:
-    project_src: "{{ clickhouse_base_directory_path }}keeper/"
-    pull: true
-    recreate: never
-    state: present
-    restarted: false
-    remove_orphans: no
-    remove_volumes: false
-
-
-
-
-
-#- name: Run the Clickhouse_Keeper container
-#  docker_container:
-#    name: "{{ ansible_hostname }}-clickhouse-keeper"
-#    image: clickhouse/clickhouse-keeper:{{ clickhouse_keeper_version }}
-#    restart_policy: unless-stopped
-#    network_mode: host
-#    state: started
-#    volumes:
-#      - "/root/keeper/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml"
-#      - "/root/keeper/clickhouse-keeper.log:/var/log/clickhouse-keeper/clickhouse-keeper.log"
-#      - "/root/keeper/clickhouse-keeper.err.log:/var/log/clickhouse-keeper/clickhouse-keeper.err.log"
-#
-#
-#
-
-
-
-
+    - clickhouse-keeper.log
+    - clickhouse-keeper.err.log
