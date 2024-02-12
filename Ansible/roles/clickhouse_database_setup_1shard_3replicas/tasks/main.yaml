@@ -4,23 +4,15 @@
     data: alive
 
 
-- name: create keyring directory
-  file:
-    path: "{{ clickhouse_base_directory_path }}clickhouse_sql_schema/"
-    owner: root
-    group: root
-    mode: 0755
-    state: directory
-
 - name: Copy sample data into clickhouse
   copy:
     src: files/annual-enterprise-survey-2021-financial-year-provisional-csv.csv
-    dest: "{{ clickhouse_base_directory_path }}clickhouse_sql_schema/"
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Clickhouse_SQL_schema/"
 
 - name: Generate SQL file from template
   template:
     src: "templates/{{ item }}"
-    dest: "{{ clickhouse_base_directory_path }}clickhouse_sql_schema/{{ item | replace('.j2', '') }}_{{ ansible_hostname }}.sql"
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Clickhouse_SQL_schema/{{ item | replace('.j2', '') }}_{{ ansible_hostname }}.sql"
   with_items:
     - On_Cluster_DB.sql.j2
     - On_Cluster_Table.sql.j2
@@ -31,15 +23,15 @@
   shell:
     cmd: docker exec -i "clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}" bash -c 'clickhouse-client -u "{{ clickhouse_user }}" --password "{{ clickhouse_password }}" --query="$(cat {{ clickhouse_base_directory_path }}{{ item }})"'
   with_items:
-    - clickhouse_sql_schema/On_Cluster_DB.sql_{{ ansible_hostname }}.sql
-    - clickhouse_sql_schema/On_Cluster_Table.sql_{{ ansible_hostname }}.sql
+    - /Clickhouse/Clickhouse_SQL_schema/On_Cluster_DB.sql_{{ ansible_hostname }}.sql
+    - /Clickhouse/Clickhouse_SQL_schema/On_Cluster_Table.sql_{{ ansible_hostname }}.sql
 
 
 
 
 - name: Import data into the shared table
   shell:
-    cmd: "docker exec -i \"clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}\" bash -c 'cat {{ clickhouse_base_directory_path }}clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u \"{{ clickhouse_user }}\" --password \"{{ clickhouse_password }}\" --query=\"INSERT INTO kang.kangtable FORMAT CSV\"'"
+    cmd: "docker exec -i \"clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}\" bash -c 'cat {{ clickhouse_base_directory_path }}/Clickhouse/Clickhouse_SQL_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u \"{{ clickhouse_user }}\" --password \"{{ clickhouse_password }}\" --query=\"INSERT INTO kang.kangtable FORMAT CSV\"'"
 
 
 
