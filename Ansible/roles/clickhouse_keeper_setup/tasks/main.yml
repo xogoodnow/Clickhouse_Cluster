@@ -4,29 +4,6 @@
     data: alive
 
 
-- name: Create the required directories
-  file:
-    path: "{{ clickhouse_base_directory_path }}{{ item }}"
-    state: directory
-    owner: root
-    group: root
-    mode: "0777"
-  with_items:
-    - /keeper/
-
-
-- name: Create the files for general and error log
-  file:
-    path: "{{ clickhouse_base_directory_path }}{{ item }}"
-    state: touch
-    owner: root
-    group: root
-    mode: "0777"
-  with_items:
-    - keeper/clickhouse-keeper.log
-    - keeper/clickhouse-keeper.err.log
-
-
 
 - name: Pull the Clickhouse_Keeper image
   docker_image:
@@ -36,7 +13,7 @@
 
 - name: Set the config file for Clickhouse_Keeper instances
   template:
-    dest: "{{ clickhouse_base_directory_path }}keeper/keeper_config.xml"
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Config/keeper_config.xml"
     src: "templates/{{ item }}"
     mode: "0777"
   with_items:
@@ -47,12 +24,12 @@
 - name: Set the compose file for clickhouse keeper
   template:
     src: "templates/docker-compose.yaml.j2"
-    dest: "{{ clickhouse_base_directory_path }}keeper/docker-compose.yaml"
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/docker-compose.yaml"
 
 
 - name: Run the container for clickhouse keeper
   community.general.docker_compose:
-    project_src: "{{ clickhouse_base_directory_path }}keeper/"
+    project_src: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/"
     pull: true
     recreate: never
     state: present
