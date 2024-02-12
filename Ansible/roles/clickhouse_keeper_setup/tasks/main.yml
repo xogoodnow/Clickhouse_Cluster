@@ -7,7 +7,7 @@
 
 - name: Pull the Clickhouse_Keeper image
   docker_image:
-    name: clickhouse/clickhouse-keeper:{{ clickhouse_keeper_version }}
+    name: "{{ clickhouse_keeper_base_image }}:{{ clickhouse_keeper_version }}"
     source: pull
 
 
