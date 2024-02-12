@@ -29,4 +29,15 @@ clickhouse_keeper_coordination_log_storage_path_on_container: /var/lib/clickhous
 clickhouse_keeper_coordination_snapshot_path_on_host: /var/lib/clickhouse/coordination/snapshots
 clickhouse_keeper_coordination_snapshot_path_on_container: /var/lib/clickhouse/coordination/snapshots
 clickhouse_keeper_raft_port: 9234
+clickhouse_base_image: clickhouse/clickhouse-server
+clickhouse_data_path_on_host: /Clickhouse/Data/
+clickhouse_data_path_on_container: /var/lib/clickhouse/
+clickhouse_log_directory_path_on_host: /Clickhouse/Logs/
+clickhouse_log_directory_path_on_container: /var/log/clickhouse-server/
+clickhouse_log_coordination_path_on_host: /var/log/clickhouse/coordination/logs
+clickhouse_log_coordination_path_on_container: /var/log/clickhouse/coordination/logs
+clickhouse_snapshot_coordination_path_on_host: /var/lib/clickhouse/coordination/snapshots
+clickhouse_snapshot_coordination_path_on_container: /var/lib/clickhouse/coordination/snapshots
+
+
 
