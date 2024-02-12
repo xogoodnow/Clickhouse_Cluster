@@ -32,11 +32,11 @@
 
 - name: Create the files for general and error log files
   file:
-    path: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Logs/{{ item }}"
+    path: "{{ clickhouse_base_directory_path }}{{ item }}"
     state: touch
     owner: root
     group: root
     mode: "0777"
   with_items:
-    - clickhouse-keeper.log
-    - clickhouse-keeper.err.log
+    - "{{ clickhouse_keeper_log_file_path_on_host }}"
+    - "{{ clickhouse_keeper_error_file_path_on_host }}"
