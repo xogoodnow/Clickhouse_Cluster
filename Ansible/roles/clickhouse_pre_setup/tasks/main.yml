@@ -21,6 +21,7 @@
     - /Clickhouse/Exporter/
     - /Clickhouse/Exporter/Docker
     - /Clickhouse/Keeper/
+    - /Clickhouse/Keeper/Config/
     - /Clickhouse/Keeper/Logs/
     - /Clickhouse/Clickhouse_SQL_schema/
     - /var/lib/clickhouse/coordination/snapshots
