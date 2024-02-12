@@ -4,12 +4,12 @@ services:
     container_name: "clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}"
     image: "clickhouse/clickhouse-server:{{ clickhouse_version }}"
     volumes:
-        - "/root/clickhouse/ch_data:/var/lib/clickhouse/"
-        - "/root/clickhouse/ch_logs:/var/log/clickhouse-server/"
-        - "/root/clickhouse/config.xml:/etc/clickhouse-server/config.xml"
+        - "{{ clickhouse_base_directory_path }}/Clickhouse/Data/:/var/lib/clickhouse/"
+        - "{{ clickhouse_base_directory_path }}/Clickhouse/Logs/:/var/log/clickhouse-server/"
+        - "{{ clickhouse_base_directory_path }}/Clickhouse/Config/config.xml:/etc/clickhouse-server/config.xml"
         - "/var/log/clickhouse/coordination/logs:/var/log/clickhouse/coordination/logs"
         - "/var/lib/clickhouse/coordination/snapshots:/var/lib/clickhouse/coordination/snapshots"
-        - "/root/clickhouse_sql_schema/:/root/clickhouse_sql_schema/"
+        - "{{ clickhouse_base_directory_path }}/Clickhouse/Clickhouse_SQL_schema/:/root/clickhouse_sql_schema/"
 
     restart: unless-stopped
     network_mode: host
