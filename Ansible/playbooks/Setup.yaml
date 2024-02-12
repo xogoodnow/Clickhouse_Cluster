@@ -11,7 +11,7 @@
         name: "{{ item }}"
       with_items:
         - $PWD/roles/pre_setup
-        - $PWD/roles/os_tuning
+        - $PWD/roles/clickhouse_os_tuning
         - $PWD/roles/install_docker
 
 
