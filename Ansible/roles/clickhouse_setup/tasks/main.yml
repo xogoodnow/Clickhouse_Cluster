@@ -41,29 +41,3 @@
 
 
 
-#- name: Run the Clickhouse container
-#  docker_container:
-#    name: "{{ ansible_hostname }}-clickhouse"
-#    image: clickhouse/clickhouse-server:{{ clickhouse_version }}
-#    restart_policy: unless-stopped
-#    network_mode: host
-#    state: started
-#    env:
-#      CLICKHOUSE_USER: "{{ CLICKHOUSE_USER }}"
-#      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
-#      CLICKHOUSE_PASSWORD: "{{ CLICKHOUSE_PASSWORD }}"
-#
-#    ulimits:
-#      - nofile:262144:262144
-#
-#    volumes:
-#      - "/root/clickhouse/ch_data:/var/lib/clickhouse/"
-#      - "/root/clickhouse/ch_logs:/var/log/clickhouse-server/"
-#      - "/root/clickhouse/config.xml:/etc/clickhouse-server/config.xml"
-#      - "/var/log/clickhouse/coordination/logs:/var/log/clickhouse/coordination/logs"
-#      - "/var/lib/clickhouse/coordination/snapshots:/var/lib/clickhouse/coordination/snapshots"
-#      - "/root/clickhouse_sql_schema/:/root/clickhouse_sql_schema/"
-#
-
-
-
