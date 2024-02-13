@@ -12,7 +12,6 @@ clickhouse_password: password
 clickhouse_base_directory_path: /root/
 clickhouse_test_database_name: click
 clickhouse_test_table_name: clicktable
-clickhouse_test_cluster_name: CLICKHOUSE_CLUSTER
 clickhouse_production_cluster_name: PRODUCTION_CLICKHOUSE_CLUSTER
 clickhouse_keeper_base_image: clickhouse/clickhouse-keeper
 clickhouse_keeper_version: latest
@@ -42,7 +41,10 @@ clickhouse_snapshot_coordination_path_on_container: /var/lib/clickhouse/coordina
 clickhouse_log_file_path: /var/log/clickhouse-server/clickhouse-server.log
 clickhouse_error_file_path: /var/log/clickhouse-server/clickhouse-server.err.log
 clickhouse_metrics_exposed_on_port: 8001
-
-
-
+clickhouse_http_port: 8999
+clickhouse_tcp_port: 9000
+clickhouse_postgresql_port: 9005
+clickhouse_interserver_http_port: 9009
+clickhouse_listen_address: 0.0.0.0
+clickhouse_max_connections: 4096
 
