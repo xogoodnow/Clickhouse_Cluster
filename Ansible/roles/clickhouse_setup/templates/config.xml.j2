@@ -51,7 +51,7 @@
 
    <macros>
         <shard>01</shard>
-        <replica>clickhouse-0</replica>
+        <replica>clickhouse-1</replica>
         <cluster>{{ clickhouse_production_cluster_name }}</cluster>
     </macros>
 
@@ -59,14 +59,14 @@
 
     <macros>
         <shard>01</shard>
-        <replica>clickhouse-1</replica>
+        <replica>clickhouse-2</replica>
         <cluster>{{ clickhouse_production_cluster_name }}</cluster>
     </macros>
 
     {% elif ansible_play_batch.index(inventory_hostname) == 2 %}
    <macros>
         <shard>01</shard>
-        <replica>clickhouse-2</replica>
+        <replica>clickhouse-3</replica>
         <cluster>{{ clickhouse_production_cluster_name }}</cluster>
     </macros>
 
@@ -220,12 +220,6 @@
         <shard>
             <internal_replication>true</internal_replication>
             <replica>
-                <host>clickhouse-0</host>
-                <port>{{ clickhouse_tcp_port }}</port>
-                <user>{{ clickhouse_user }}</user>
-                <password>{{ clickhouse_password }}</password>
-            </replica>
-            <replica>
                 <host>clickhouse-1</host>
                 <port>{{ clickhouse_tcp_port }}</port>
                 <user>{{ clickhouse_user }}</user>
@@ -233,6 +227,12 @@
             </replica>
             <replica>
                 <host>clickhouse-2</host>
+                <port>{{ clickhouse_tcp_port }}</port>
+                <user>{{ clickhouse_user }}</user>
+                <password>{{ clickhouse_password }}</password>
+            </replica>
+            <replica>
+                <host>clickhouse-3</host>
                 <port>{{ clickhouse_tcp_port }}</port>
                 <user>{{ clickhouse_user }}</user>
                 <password>{{ clickhouse_password }}</password>
@@ -246,15 +246,15 @@
 
     <zookeeper>
         <node index="1">
-            <host>clickhouse-0</host>
-            <port>{{ clickhouse_keeper_listening_port }}</port>
-        </node>
-        <node index="2">
             <host>clickhouse-1</host>
             <port>{{ clickhouse_keeper_listening_port }}</port>
         </node>
-        <node index="3">
+        <node index="2">
             <host>clickhouse-2</host>
+            <port>{{ clickhouse_keeper_listening_port }}</port>
+        </node>
+        <node index="3">
+            <host>clickhouse-3</host>
             <port>{{ clickhouse_keeper_listening_port }}</port>
         </node>
     </zookeeper>
