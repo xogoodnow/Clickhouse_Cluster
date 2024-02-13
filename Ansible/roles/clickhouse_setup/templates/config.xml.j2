@@ -5,8 +5,8 @@
         <level>warning</level>
 
         <!-- Paths to log files. -->
-        <log>/var/log/clickhouse-server/clickhouse-server.log</log>
-        <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
+        <log>{{ clickhouse_log_file_path }}</log>
+        <errorlog>{{ clickhouse_error_file_path }}</errorlog>
 
         <!-- Rotation policy: -->
         <!-- 'size': Maximum size of a log file before rotation occurs. -->
@@ -34,7 +34,7 @@
 
     <prometheus>
         <endpoint>/metrics</endpoint>
-        <port>8001</port>
+        <port>{{ clickhouse_metrics_exposed_on_port }}</port>
         <status_info>1</status_info>
         <events>1</events>
         <asynchronous_metrics>1</asynchronous_metrics>
@@ -52,7 +52,7 @@
    <macros>
         <shard>01</shard>
         <replica>clickhouse-0</replica>
-        <cluster>KANG_CLICKHOUSE</cluster>
+        <cluster>{{ clickhouse_production_cluster_name }}</cluster>
     </macros>
 
     {% elif ansible_play_batch.index(inventory_hostname) == 1 %}
