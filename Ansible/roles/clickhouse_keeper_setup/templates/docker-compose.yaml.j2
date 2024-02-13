@@ -20,3 +20,6 @@ services:
       driver: json-file
       options:
         max-size: "{{ clickhouse_keeper_max_log_size }}"
+    mem_limit: "{{ clickhouse_keeper_memory_limit }}"
+    cpus: "{{ clickhouse_keeper_cpu_limit }}"
+
