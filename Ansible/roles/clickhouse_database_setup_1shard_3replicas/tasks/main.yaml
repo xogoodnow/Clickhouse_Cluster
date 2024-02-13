@@ -23,8 +23,8 @@
   shell:
     cmd: docker exec -i "clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}" bash -c 'clickhouse-client -u "{{ clickhouse_user }}" --password "{{ clickhouse_password }}" --query="$(cat {{ clickhouse_base_directory_path }}{{ item }})"'
   with_items:
-    - /Clickhouse/clickhouse_sql_schema/On_Cluster_DB.sql_{{ ansible_hostname }}.sql
-    - /Clickhouse/clickhouse_sql_schema/On_Cluster_Table.sql_{{ ansible_hostname }}.sql
+    - clickhouse_sql_schema/On_Cluster_DB.sql_{{ ansible_hostname }}.sql
+    - clickhouse_sql_schema/On_Cluster_Table.sql_{{ ansible_hostname }}.sql
 
 
 
