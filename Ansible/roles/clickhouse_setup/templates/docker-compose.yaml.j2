@@ -4,7 +4,7 @@ services:
     container_name: "clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) }}"
     image: "clickhouse/clickhouse-server:{{ clickhouse_version }}"
     volumes:
-        - "{{ clickhouse_base_directory_path }}{{ clickhouse_log_directory_path_on_host }}:{{ clickhouse_log_directory_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}{{ clickhouse_data_path_on_host }}:{{ clickhouse_data_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}{{ clickhouse_log_directory_path_on_host }}:{{ clickhouse_log_directory_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}Clickhouse/Config/config.xml:/etc/clickhouse-server/config.xml"
         - "{{ clickhouse_log_coordination_path_on_host }}:{{ clickhouse_log_coordination_path_on_container }}"
