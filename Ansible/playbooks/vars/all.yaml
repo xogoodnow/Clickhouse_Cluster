@@ -47,5 +47,6 @@ clickhouse_postgresql_port: "9005"
 clickhouse_interserver_http_port: "9009"
 clickhouse_listen_address: "0.0.0.0"
 clickhouse_max_connections: "4096"
+docker_api_version: "2.4"
 
 
