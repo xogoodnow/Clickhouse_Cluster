@@ -9,4 +9,10 @@ services:
       - "{{ clickhouse_base_directory_path }}{{ clickhouse_keeper_error_file_path_on_host }}:{{ clickhouse_keeper_error_file_path_on_container }}"
     restart: unless-stopped
     network_mode: host
-
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+      memlock:
+        soft: -1
+        hard: -1
