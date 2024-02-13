@@ -31,7 +31,7 @@
 
 - name: Import data into the shared table
   shell:
-    cmd: "docker exec -i \"clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) + 1 }}\" bash -c 'cat {{ clickhouse_base_directory_path }}/Clickhouse/Clickhouse_SQL_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u \"{{ clickhouse_user }}\" --password \"{{ clickhouse_password }}\" --query=\"INSERT INTO \"{{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }}\" FORMAT CSV\"'"
+    cmd: "docker exec -i \"clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) + 1 }}\" bash -c 'cat {{ clickhouse_base_directory_path }}/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client -u \"{{ clickhouse_user }}\" --password \"{{ clickhouse_password }}\" --query=\"INSERT INTO \"{{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }}\" FORMAT CSV\"'"
 
 
 
