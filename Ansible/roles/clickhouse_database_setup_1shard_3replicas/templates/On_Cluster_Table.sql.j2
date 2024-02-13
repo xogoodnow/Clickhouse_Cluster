@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS {{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }} ON CLUSTER "{{ clickhouse_test_cluster_name }}"
+CREATE TABLE IF NOT EXISTS {{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }} ON CLUSTER "{{ clickhouse_production_cluster_name }}"
 (
     `Year` Int32,
     `Industry_aggregation_NZSIOC` String,
