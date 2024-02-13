@@ -52,7 +52,7 @@ resource "local_file" "etcd-hosts" {
       monitoring_ips = hcloud_server.monitoring.*.ipv4_address
     }
   )
-  filename = "${path.module}/../../../Ansible/roles/Pre_Setup/files/etchost.yaml"
+  filename = "${path.module}/../../../Ansible/roles/pre_setup/files/etchost.yaml"
 }
 
 
