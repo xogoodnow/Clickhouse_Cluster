@@ -19,6 +19,7 @@
       include_role:
         name: "{{ item }}"
       with_items:
+        - $PWD/roles/clickhouse_pre_setup
         - $PWD/roles/clickhouse_setup
         - $PWD/roles/clickhouse_keeper_setup
       when: mode == 'clickhouse'
