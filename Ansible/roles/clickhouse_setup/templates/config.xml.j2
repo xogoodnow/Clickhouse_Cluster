@@ -60,14 +60,14 @@
     <macros>
         <shard>01</shard>
         <replica>clickhouse-1</replica>
-        <cluster>KANG_CLICKHOUSE</cluster>
+        <cluster>{{ clickhouse_production_cluster_name }}</cluster>
     </macros>
 
     {% elif ansible_play_batch.index(inventory_hostname) == 2 %}
    <macros>
         <shard>01</shard>
         <replica>clickhouse-2</replica>
-        <cluster>KANG_CLICKHOUSE</cluster>
+        <cluster>{{ clickhouse_production_cluster_name }}</cluster>
     </macros>
 
     {% endif %}
@@ -77,7 +77,7 @@
 
 
 
-
+<!--
     <url_scheme_mappers>
         <s3>
             <to>https://{bucket}.s3.amazonaws.com</to>
@@ -90,20 +90,21 @@
         </oss>
     </url_scheme_mappers>
 
+-->
 
-    <http_port>8999</http_port>
+    <http_port>{{ clickhouse_http_port }}</http_port>
 
-    <tcp_port>9000</tcp_port>
+    <tcp_port>{{ clickhouse_tcp_port }}</tcp_port>
 
-    <postgresql_port>9005</postgresql_port>
+    <postgresql_port>{{ clickhouse_postgresql_port }}</postgresql_port>
 
-    <interserver_http_port>9009</interserver_http_port>
-
-
-    <listen_host>0.0.0.0</listen_host>
+    <interserver_http_port>{{ clickhouse_interserver_http_port }}</interserver_http_port>
 
 
-    <max_connections>4096</max_connections>
+    <listen_host>{{ clickhouse_listen_address }}</listen_host>
+
+
+    <max_connections>{{ clickhouse_max_connections }}</max_connections>
 
     <keep_alive_timeout>3</keep_alive_timeout>
 
@@ -215,29 +216,29 @@
 
 
 <remote_servers>
-    <KANG_CLICKHOUSE>
+    <{{ clickhouse_production_cluster_name }}>
         <shard>
             <internal_replication>true</internal_replication>
             <replica>
                 <host>clickhouse-0</host>
-                <port>9000</port>
-                <user>username</user>
-                <password>password</password>
+                <port>{{ clickhouse_tcp_port }}</port>
+                <user>{{ clickhouse_user }}</user>
+                <password>{{ clickhouse_password }}</password>
             </replica>
             <replica>
                 <host>clickhouse-1</host>
-                <port>9000</port>
-                <user>username</user>
-                <password>password</password>
+                <port>{{ clickhouse_tcp_port }}</port>
+                <user>{{ clickhouse_user }}</user>
+                <password>{{ clickhouse_password }}</password>
             </replica>
             <replica>
                 <host>clickhouse-2</host>
-                <port>9000</port>
-                <user>username</user>
-                <password>password</password>
+                <port>{{ clickhouse_tcp_port }}</port>
+                <user>{{ clickhouse_user }}</user>
+                <password>{{ clickhouse_password }}</password>
             </replica>
         </shard>
-    </KANG_CLICKHOUSE>
+    </{{ clickhouse_production_cluster_name }}>
 </remote_servers>
 
 
@@ -246,15 +247,15 @@
     <zookeeper>
         <node index="1">
             <host>clickhouse-0</host>
-            <port>2181</port>
+            <port>{{ clickhouse_keeper_listening_port }}</port>
         </node>
         <node index="2">
             <host>clickhouse-1</host>
-            <port>2181</port>
+            <port>{{ clickhouse_keeper_listening_port }}</port>
         </node>
         <node index="3">
             <host>clickhouse-2</host>
-            <port>2181</port>
+            <port>{{ clickhouse_keeper_listening_port }}</port>
         </node>
     </zookeeper>
 
