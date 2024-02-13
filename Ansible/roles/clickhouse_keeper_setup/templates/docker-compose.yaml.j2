@@ -16,3 +16,7 @@ services:
       memlock:
         soft: -1
         hard: -1
+    logging:
+      driver: json-file
+      options:
+        max-size: "{{ clickhouse_keeper_max_log_size }}"
