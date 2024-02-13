@@ -13,6 +13,7 @@ clickhouse_base_directory_path: /root/
 clickhouse_test_database_name: click
 clickhouse_test_table_name: clicktable
 clickhouse_test_cluster_name: CLICKHOUSE_CLUSTER
+clickhouse_production_cluster_name: PRODUCTION_CLICKHOUSE_CLUSTER
 clickhouse_keeper_base_image: clickhouse/clickhouse-keeper
 clickhouse_keeper_version: latest
 clickhouse_keeper_log_file_path_on_host: /Clickhouse/Keeper/Logs/clickhouse-keeper.log
@@ -38,6 +39,10 @@ clickhouse_log_coordination_path_on_host: /var/log/clickhouse/coordination/logs
 clickhouse_log_coordination_path_on_container: /var/log/clickhouse/coordination/logs
 clickhouse_snapshot_coordination_path_on_host: /var/lib/clickhouse/coordination/snapshots
 clickhouse_snapshot_coordination_path_on_container: /var/lib/clickhouse/coordination/snapshots
+clickhouse_log_file_path: /var/log/clickhouse-server/clickhouse-server.log
+clickhouse_error_file_path: /var/log/clickhouse-server/clickhouse-server.err.log
+clickhouse_metrics_exposed_on_port: 8001
+
 
 
 
