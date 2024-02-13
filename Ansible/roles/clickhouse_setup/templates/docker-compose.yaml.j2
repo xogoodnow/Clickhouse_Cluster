@@ -24,3 +24,7 @@ services:
       CLICKHOUSE_USER: "{{ clickhouse_user }}"
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
       CLICKHOUSE_PASSWORD: "{{ clickhouse_password }}"
+    logging:
+      driver: json-file
+      options:
+        max-size: "{{ clickhouse_max_log_size }}"

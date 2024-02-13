@@ -49,4 +49,4 @@ clickhouse_listen_address: "0.0.0.0"
 clickhouse_max_connections: "4096"
 docker_api_version: "2.4"
 clickhouse_keeper_max_log_size: "10g"
-
+clickhouse_max_log_size: "20g"
