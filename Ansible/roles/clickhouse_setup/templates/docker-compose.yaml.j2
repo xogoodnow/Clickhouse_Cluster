@@ -11,7 +11,7 @@ services:
         - "{{ clickhouse_snapshot_coordination_path_on_host }}:{{ clickhouse_snapshot_coordination_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}Clickhouse/Clickhouse_SQL_schema/:/root/clickhouse_sql_schema/"
 
-    restart: unless-stopped
+    restart: {{ clickhouse_restart_policy }}
     network_mode: host
     ulimits:
       nofile:
