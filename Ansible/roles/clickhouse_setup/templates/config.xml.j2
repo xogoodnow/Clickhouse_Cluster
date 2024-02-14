@@ -2,7 +2,7 @@
 
     <logger>
         <!-- Level of detail in logging. Using 'information' for general production use. -->
-        <level>warning</level>
+        <level>{{ clickhouse_log_level }}</level>
 
         <!-- Paths to log files. -->
         <log>{{ clickhouse_log_file_path }}</log>
