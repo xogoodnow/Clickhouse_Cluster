@@ -1,7 +1,7 @@
 <clickhouse>
     <logger>
 
-        <level>trace</level>
+        <level>{{ clickhouse_keeper_log_level }}</level>
         <log>{{ clickhouse_keeper_log_file_path_on_container }}</log>
         <errorlog>{{ clickhouse_keeper_error_file_path_on_container }}</errorlog>
 
