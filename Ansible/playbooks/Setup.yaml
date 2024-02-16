@@ -14,12 +14,18 @@
         - $PWD/roles/clickhouse_os_tuning
         - $PWD/roles/install_docker
 
+    - name: Generatign certificates for clickhosue cluster
+      include_role:
+        name: "{{ item }}"
+      with_items:
+        - $PWD/roles/clickhouse_cluster_certificate_generation
+      when: init_cluster == 'true'
+
 
     - name: Deploy Clickhouse and Clickhouse_Keeper
       include_role:
         name: "{{ item }}"
       with_items:
-        - $PWD/roles/clickhouse_cluster_certificate_generation
         - $PWD/roles/clickhouse_pre_setup
         - $PWD/roles/clickhouse_setup
         - $PWD/roles/clickhouse_keeper_setup
