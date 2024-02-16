@@ -14,6 +14,14 @@
         - $PWD/roles/clickhouse_os_tuning
         - $PWD/roles/install_docker
 
+    - name: Pre setup Clickhouse
+      include_role:
+        name: "{{ item }}"
+      with_items:
+        - $PWD/roles/clickhouse_pre_setup
+      when: mode == 'clickhouse'
+
+      
     - name: Generatign certificates for clickhouse cluster
       include_role:
         name: "{{ item }}"
