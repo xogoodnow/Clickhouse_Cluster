@@ -17,13 +17,13 @@
     src: "templates/{{ item }}"
     mode: "0777"
   with_items:
-    - keeper_config.xml.j2
+    - keeper_config.xml_tls.j2
 
 
 
 - name: Set the compose file for clickhouse keeper
   template:
-    src: "templates/docker-compose.yaml.j2"
+    src: "templates/docker-compose.yaml-tls.j2"
     dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/docker-compose.yaml"
 
 
