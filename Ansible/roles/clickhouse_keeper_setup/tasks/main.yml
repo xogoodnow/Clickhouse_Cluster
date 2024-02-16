@@ -4,6 +4,14 @@
     data: alive
 
 
+- name: Copy certs to the destinations
+  ansible.builtin.copy:
+    src: files/certs/
+    dest: "{{ clickhouse_base_directory_path }}{{ clickhouse_certs_base_path }}"
+    owner: root
+    group: root
+    mode: '0777'
+
 
 - name: Pull the Clickhouse_Keeper image
   docker_image:
