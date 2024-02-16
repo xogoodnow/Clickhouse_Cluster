@@ -17,7 +17,7 @@
     src: "templates/{{ item }}"
     mode: "0777"
   with_items:
-    - keeper_config.xml_tls.j2
+    - keeper_config_tls.xml.j2
 
 
 
