@@ -12,12 +12,17 @@
     source: pull
 
 
-- name: Set the config file for Redis master instances
+- name: Set the config file for clickhouse  instances
   template:
     dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Config/config.xml"
     src: templates/config_tls.xml.j2
     mode: "0777"
 
+- name: Set the config file for clickhouse client
+  template:
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Config/config-client.xml"
+    src: templates/clickhouse-client-tls.xml.j2
+    mode: "0777"
 
 
 
