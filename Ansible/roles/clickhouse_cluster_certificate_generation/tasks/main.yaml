@@ -1,7 +1,7 @@
 ---
 - name: Generate a key that will be used for the new CA
-  chdir: /root/
   shell:
+    chdir: /root/
     cmd: "openssl genrsa -out clickhouse_ca.key   4096"
   register: ca_key_result
 
@@ -10,8 +10,8 @@
     var: ca_key_result
 
 - name: Generate a new self-signed CA certificate
-  chdir: /root/
   shell:
+    chdir: /root/
     cmd: "openssl req -x509 -subj '/CN=clickhouse.local CA' -nodes -key clickhouse_ca.key -days   3650 -out clickhouse_ca.crt"
   register: ca_cert_result
 
@@ -20,9 +20,8 @@
     var: ca_cert_result
 
 - name: Verify the contents of the new CA certificate
-  chdir: /root/
-
   shell:
+    chdir: /root/
     cmd: "openssl x509 -in clickhouse_ca.crt -text"
   register: ca_cert_verify_result
 
@@ -31,9 +30,8 @@
     var: ca_cert_verify_result
 
 - name: Create a certificate request (CSR) and generate a key for each node
-  chdir: /root/
-
   shell:
+    chdir: /root/
     cmd: openssl req -newkey rsa:4096 -nodes -subj "/CN={{ item.common_name }}" -addext "subjectAltName = DNS:{{ item.dns_host_1 }}, DNS:{{ item.dns_host_2 }} " -keyout {{ item.key_name }}.key -out {{ item.csr_name }}.csr
   with_items:
     - { key_name: 'clickhouse-1', common_name: 'clickhouse-1', dns_host_1: 'clickhouse-1', dns_host_2: 'localhost', csr_name: 'clickhouse-1' }
@@ -46,9 +44,8 @@
     var: csr_result
 
 - name: Using the CSR and CA, create new certificate and key pairs
-  chdir: /root/
-
   shell:
+    chdir: /root/
     cmd: openssl x509 -req -in {{ item.csr_name }}.csr -out {{ item.crt_name }}.crt -CAcreateserial -CA clickhouse_ca.crt -CAkey clickhouse_ca.key -days   365
   with_items:
     - { csr_name: 'clickhouse-1', crt_name: 'clickhouse-1' }
@@ -61,9 +58,8 @@
     var: cert_result
 
 - name: Verify the certs for subject and issuer
-  chdir: /root/
-
   shell:
+    chdir: /root/
     cmd: "openssl x509 -in {{ item.crt_name }}.crt -text -noout"
   with_items:
     - { crt_name: 'clickhouse-1' }
@@ -76,9 +72,8 @@
     var: cert_verify_result
 
 - name: Check that the new certificates verify against the CA cert
-  chdir: /root/
-
   shell:
+    chdir: /root/
     cmd: "openssl verify -CAfile clickhouse_ca.crt {{ item.crt_name }}.crt"
   with_items:
     - { crt_name: 'clickhouse-1' }
