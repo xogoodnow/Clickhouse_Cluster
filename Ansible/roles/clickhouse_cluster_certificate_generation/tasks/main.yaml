@@ -1,4 +1,8 @@
 ---
+- name: check connectivity
+  ping:
+    data: alive
+
 - name: Generate a key that will be used for the new CA
   shell:
     chdir: "{{ clickhouse_base_directory_path }}{{ clickhouse_certs_base_path }}"
