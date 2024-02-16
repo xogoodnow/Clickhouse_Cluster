@@ -1,0 +1,69 @@
+<clickhouse>
+    <logger>
+
+        <level>{{ clickhouse_keeper_log_level }}</level>
+        <log>{{ clickhouse_keeper_log_file_path_on_container }}</log>
+        <errorlog>{{ clickhouse_keeper_error_file_path_on_container }}</errorlog>
+
+        <size>1000M</size>
+        <count>10</count>
+    </logger>
+    <max_connections>{{ clickhouse_keeper_max_con }}</max_connections>
+    <listen_host>{{ clickhouse_keeper_listening_address  }}</listen_host>
+    
+    <keeper_server>
+        <tcp_port_secure>{{ clickhouse_keeper_tls_listening_port }}</tcp_port_secure>
+        <server_id>{{ ansible_play_batch.index(inventory_hostname) + 1 }}</server_id>
+        <log_storage_path>{{ clickhouse_keeper_coordination_log_storage_path_on_container }}</log_storage_path>
+        <snapshot_storage_path>{{ clickhouse_keeper_coordination_snapshot_path_on_container }}</snapshot_storage_path>
+
+        <coordination_settings>
+            <operation_timeout_ms>10000</operation_timeout_ms>
+            <session_timeout_ms>30000</session_timeout_ms>
+            <raft_logs_level>trace</raft_logs_level>
+        </coordination_settings>
+
+        <raft_configuration>
+            <secure>true</secure>
+            <server>
+                <id>1</id>
+                <hostname>clickhouse-1</hostname>
+                <port>{{ clickhouse_keeper_raft_port_tls }}</port>
+            </server>
+            <server>
+                <id>2</id>
+                <hostname>clickhouse-2</hostname>
+                <port>{{ clickhouse_keeper_raft_port_tls }}</port>
+            </server>
+            <server>
+                <id>3</id>
+                <hostname>clickhouse-3</hostname>
+                <port>{{ clickhouse_keeper_raft_port_tls  }}</port>
+            </server>
+        </raft_configuration>
+    </keeper_server>
+
+    <openSSL>
+        <server>
+            <certificateFile>/etc/clickhouse-server/certs/clickhouse{{ ansible_play_batch.index(inventory_hostname) + 1 }}.crt</certificateFile>
+            <privateKeyFile>/etc/clickhouse-server/certs/clickhouse{{ ansible_play_batch.index(inventory_hostname) + 1 }}.key</privateKeyFile>
+            <verificationMode>relaxed</verificationMode>
+            <caConfig>/etc/clickhouse-server/certs/clickhouse_ca.crt</caConfig>
+            <cacheSessions>true</cacheSessions>
+            <disableProtocols>sslv2,sslv3</disableProtocols>
+            <preferServerCiphers>true</preferServerCiphers>
+        </server>
+        <client>
+            <loadDefaultCAFile>false</loadDefaultCAFile>
+            <caConfig>/etc/clickhouse-server/certs/clickhouse_ca.crt</caConfig>
+            <cacheSessions>true</cacheSessions>
+            <disableProtocols>sslv2,sslv3</disableProtocols>
+            <preferServerCiphers>true</preferServerCiphers>
+            <verificationMode>relaxed</verificationMode>
+            <invalidCertificateHandler>
+                <name>RejectCertificateHandler</name>
+            </invalidCertificateHandler>
+        </client>
+    </openSSL>
+
+</clickhouse>
