@@ -14,7 +14,7 @@
         - $PWD/roles/clickhouse_os_tuning
         - $PWD/roles/install_docker
 
-    - name: Generatign certificates for clickhosue cluster
+    - name: Generatign certificates for clickhouse cluster
       include_role:
         name: "{{ item }}"
       with_items:
