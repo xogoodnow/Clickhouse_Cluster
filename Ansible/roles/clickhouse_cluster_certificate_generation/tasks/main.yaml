@@ -92,7 +92,7 @@
 
 - name: Fetching the certs for keeper
   ansible.builtin.fetch:
-    src: "{{ kafka_cert_directory_base_path }}{{ item.remote_file }}"
+    src: "{{ clickhouse_base_directory_path }}{{ item.remote_file }}"
     dest: "$PWD/roles/clickhouse_keeper_setup/files/certs/{{ item.local_file }}"
     flat: yes
   with_items:
