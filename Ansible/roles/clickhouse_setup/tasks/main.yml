@@ -15,7 +15,7 @@
 - name: Set the config file for Redis master instances
   template:
     dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Config/config.xml"
-    src: templates/config.xml.j2
+    src: templates/config_tls.xml.j2
     mode: "0777"
 
 
@@ -23,7 +23,7 @@
 
 - name: Set the compose file for clickhouse
   template:
-    src: "templates/docker-compose.yaml.j2"
+    src: "templates/docker-compose-tls.yaml.j2"
     dest: "{{ clickhouse_base_directory_path }}Clickhouse/Docker/docker-compose.yaml"
 
 
