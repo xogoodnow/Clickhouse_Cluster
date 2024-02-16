@@ -63,4 +63,4 @@ clickhouse_keeper_raft_port_tls: "9444"
 clickhouse_cert_path_on_container: /etc/clickhouse-server/certs/
 clickhouse_https_port: "8443"
 clickhouse_tcp_secure_port: "9440"
-
+clickhouse_interserver_https_port: "9010"
