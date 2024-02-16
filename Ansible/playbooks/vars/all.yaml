@@ -59,5 +59,6 @@ clickhouse_keeper_log_level: "trace"
 clickhouse_restart_policy: "unless-stopped"
 clickhouse_certs_base_path: "/Clickhouse/Config/Certs/"
 clickhouse_keeper_tls_listening_port: "9281"
+clickhouse_keeper_raft_port_tls: "9444"
 
 
