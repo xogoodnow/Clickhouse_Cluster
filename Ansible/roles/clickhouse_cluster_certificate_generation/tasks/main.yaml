@@ -88,3 +88,42 @@
 - name: Debug the result of verifying certificates against the CA
   debug:
     var: cert_verify_ca_result
+
+
+- name: Fetching the certs for keeper
+  ansible.builtin.fetch:
+    src: "{{ kafka_cert_directory_base_path }}{{ item.remote_file }}"
+    dest: "$PWD/roles/clickhouse_keeper_setup/files/certs/{{ item.local_file }}"
+    flat: yes
+  with_items:
+    - { remote_file: 'clickhouse-1.crtt', local_file: 'clickhouse-1.crt' }
+    - { remote_file: 'clickhouse-1.csr', local_file: 'clickhouse-1.csr' }
+    - { remote_file: 'clickhouse-1.key', local_file: 'clickhouse-1.key' }
+    - { remote_file: 'clickhouse-2.crtt', local_file: 'clickhouse-2.crt' }
+    - { remote_file: 'clickhouse-2.csr', local_file: 'clickhouse-2.csr' }
+    - { remote_file: 'clickhouse-2.key', local_file: 'clickhouse-2.key' }
+    - { remote_file: 'clickhouse-3.crtt', local_file: 'clickhouse-3.crt' }
+    - { remote_file: 'clickhouse-3.csr', local_file: 'clickhouse-3.csr' }
+    - { remote_file: 'clickhouse-3.key', local_file: 'clickhouse-3.key' }
+    - { remote_file: 'clickhouse_ca.crt', local_file: 'clickhouse_ca.crt' }
+    - { remote_file: 'clickhouse_ca.key', local_file: 'clickhouse_ca.key' }
+
+
+#
+#- name: Fetching the certs for clickhouse
+#  ansible.builtin.fetch:
+#    src: "{{ kafka_cert_directory_base_path }}{{ item.remote_file }}"
+#    dest: "$PWD/roles/clickhouse_setup/files/certs/{{ item.local_file }}"
+#    flat: yes
+#  with_items:
+#    - { remote_file: 'clickhouse-1.crtt', local_file: 'clickhouse-1.crt' }
+#    - { remote_file: 'clickhouse-1.csr', local_file: 'clickhouse-1.csr' }
+#    - { remote_file: 'clickhouse-1.key', local_file: 'clickhouse-1.key' }
+#    - { remote_file: 'clickhouse-2.crtt', local_file: 'clickhouse-2.crt' }
+#    - { remote_file: 'clickhouse-2.csr', local_file: 'clickhouse-2.csr' }
+#    - { remote_file: 'clickhouse-2.key', local_file: 'clickhouse-2.key' }
+#    - { remote_file: 'clickhouse-3.crtt', local_file: 'clickhouse-3.crt' }
+#    - { remote_file: 'clickhouse-3.csr', local_file: 'clickhouse-3.csr' }
+#    - { remote_file: 'clickhouse-3.key', local_file: 'clickhouse-3.key' }
+#    - { remote_file: 'clickhouse_ca.crt', local_file: 'clickhouse_ca.crt' }
+#    - { remote_file: 'clickhouse_ca.key', local_file: 'clickhouse_ca.key' }
