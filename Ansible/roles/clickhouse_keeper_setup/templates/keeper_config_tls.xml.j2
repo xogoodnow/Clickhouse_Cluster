@@ -45,8 +45,8 @@
 
     <openSSL>
         <server>
-            <certificateFile>/etc/clickhouse-server/certs/clickhouse{{ ansible_play_batch.index(inventory_hostname) + 1 }}.crt</certificateFile>
-            <privateKeyFile>/etc/clickhouse-server/certs/clickhouse{{ ansible_play_batch.index(inventory_hostname) + 1 }}.key</privateKeyFile>
+            <certificateFile>/etc/clickhouse-server/certs/clickhouse-{{ ansible_play_batch.index(inventory_hostname) + 1 }}.crt</certificateFile>
+            <privateKeyFile>/etc/clickhouse-server/certs/clickhouse-{{ ansible_play_batch.index(inventory_hostname) + 1 }}.key</privateKeyFile>
             <verificationMode>relaxed</verificationMode>
             <caConfig>/etc/clickhouse-server/certs/clickhouse_ca.crt</caConfig>
             <cacheSessions>true</cacheSessions>
