@@ -55,6 +55,8 @@
   with_items:
     - 1860.json
     - 14192.json
+    - 13500.json
+    - 16685.json
     - 14432.json
     - dashboards.yaml
 
