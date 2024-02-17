@@ -24,19 +24,19 @@ scrape_configs:
       - targets:
           - monitoring-0:9100
           - monitoring-1:9100
-          - Clickhouse-0:9100
           - Clickhouse-1:9100
           - Clickhouse-2:9100
+          - Clickhouse-3:9100
 
 
   - job_name: 'Clickhouse_exporter'
     scrape_interval: 5s
     static_configs:
       - targets:
-
-          - Clickhouse-0:8001
           - Clickhouse-1:8001
           - Clickhouse-2:8001
+          - Clickhouse-3:8001
+
 
 
 
