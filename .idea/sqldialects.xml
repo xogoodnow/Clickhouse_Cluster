@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Ansible/roles/clickhouse_database_setup_1shard_3replicas/templates/On_Cluster_DB.sql.j2" dialect="ClickHouse" />
+  </component>
+</project>

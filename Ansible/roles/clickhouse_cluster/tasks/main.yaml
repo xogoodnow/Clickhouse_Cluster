@@ -1,0 +1,21 @@
+---
+
+- name: Tuning the OS for Clickhouse
+  include_tasks: clickhouse_os_tuning.yaml
+
+- name: Preparing the nodes for clickhouse setup
+  include_tasks: clickhouse_pre_setup.yaml
+
+- name: Generate certificates for clickhouse
+  include_tasks: clickhouse_cluster_certificate_generation.yaml
+  run_once: true
+
+- name: Setup clickhouse keeper
+  include_tasks: clickhouse_keeper_setup.yaml
+
+- name: Setup clickhouse
+  include_tasks: clickhouse_setup.yaml
+
+- name: Set up the replication strategy
+  include_tasks: clickhouse_database_setup_1shard_3replicas.yaml
+  run_once: true
