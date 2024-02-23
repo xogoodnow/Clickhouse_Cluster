@@ -22,5 +22,5 @@
       include_role:
         name: "{{ item }}"
       loop:
-        - $PWD/roles/victoria_metrics_setup_dockerized
+        - $PWD/roles/victoria_metrics
       when: mode == 'monitoring'
