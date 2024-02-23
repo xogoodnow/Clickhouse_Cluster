@@ -1,0 +1,33 @@
+version: "{{ docker_api_version }}"
+services:
+  clickhouse:
+    container_name: "clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) + 1 }}"
+    image: "{{ clickhouse_base_image }}:{{ clickhouse_version }}"
+    volumes:
+        - "{{ clickhouse_base_directory_path }}{{ clickhouse_data_path_on_host }}:{{ clickhouse_data_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}{{ clickhouse_log_directory_path_on_host }}:{{ clickhouse_log_directory_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}Clickhouse/Config/config.xml:/etc/clickhouse-server/config.xml"
+        - "{{ clickhouse_log_coordination_path_on_host }}:{{ clickhouse_log_coordination_path_on_container }}"
+        - "{{ clickhouse_snapshot_coordination_path_on_host }}:{{ clickhouse_snapshot_coordination_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}Clickhouse/Clickhouse_SQL_schema/:/root/clickhouse_sql_schema/"
+
+    restart: {{ clickhouse_restart_policy }}
+    network_mode: host
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+      memlock:
+        soft: -1
+        hard: -1
+    environment:
+      CLICKHOUSE_USER: "{{ clickhouse_user }}"
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
+      CLICKHOUSE_PASSWORD: "{{ clickhouse_password }}"
+    logging:
+      driver: json-file
+      options:
+        max-size: "{{ clickhouse_max_log_size }}"
+    mem_limit: "{{ clickhouse_memory_limit }}"
+    cpus: "{{ clickhouse_cpu_limit }}"
+
