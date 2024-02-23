@@ -4,7 +4,7 @@
     data: alive
 
 
-- name: install required packages
+- name: Install required packages
   apt:
     pkg:
     - curl
@@ -13,7 +13,7 @@
     state: present
 
 
-- name: create keyring directory
+- name: Create keyring directory
   file:
     path: /etc/apt/keyrings
     owner: root
@@ -22,14 +22,14 @@
     state: directory
 
 
-- name: add docker GPG key
+- name: Add docker GPG key
   apt_key:
     url: https://download.docker.com/linux/ubuntu/gpg
     keyring: /etc/apt/keyrings/docker.gpg
 
 
 
-- name: add the repository
+- name: Add the repository
 
   apt_repository:
     repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu   jammy stable
@@ -37,12 +37,12 @@
 
 
 
-- name: update repository
+- name: Update repository
   apt:
     update_cache: yes
 
 
-- name: install docker
+- name: Install docker
   apt:
     pkg:
     - docker-ce
@@ -52,8 +52,11 @@
     - docker-compose-plugin
     - python3-pip
 
+- name: Wait for docker to be ready
+  pause:
+    seconds: 20
 
-- name: install dockerpy
+- name: Install dockerpy
   pip:
     name: docker
 
