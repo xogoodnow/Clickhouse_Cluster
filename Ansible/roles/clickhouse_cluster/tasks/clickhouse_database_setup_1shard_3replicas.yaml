@@ -1,0 +1,34 @@
+- name: Check for connectivity
+  ping:
+    data: alive
+
+- name: Copy sample data into clickhouse
+  copy:
+    src: files/annual-enterprise-survey-2021-financial-year-provisional-csv.csv
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Clickhouse_SQL_schema/"
+
+- name: Generate SQL file from template
+  template:
+    src: "templates/{{ item }}"
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Clickhouse_SQL_schema/{{ item | replace('.j2', '') }}_{{ ansible_hostname }}.sql"
+  with_items:
+    - On_Cluster_DB.sql.j2
+    - On_Cluster_Table.sql.j2
+
+- name: debug
+  debug:
+    msg: "{{ item }}"
+  with_items:
+    - "docker exec -i clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) +   1 }} bash -c 'cat {{ clickhouse_base_directory_path }}/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client --secure --query=\"INSERT INTO {{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }} FORMAT CSV\"'"
+    - "docker exec -i \"clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) +   1 }}\" bash -c 'clickhouse-client --secure --query=\"$(cat {{ clickhouse_base_directory_path }}{{ item }})\"'"
+
+- name: Execute SQL commands in ClickHouse container
+  shell:
+    cmd: "docker exec -i \"clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) +   1 }}\" bash -c 'clickhouse-client --secure --query=\"$(cat {{ clickhouse_base_directory_path }}{{ item }})\"'"
+  with_items:
+    - clickhouse_sql_schema/On_Cluster_DB.sql_{{ ansible_hostname }}.sql
+    - clickhouse_sql_schema/On_Cluster_Table.sql_{{ ansible_hostname }}.sql
+
+- name: Import data into the shared table
+  shell:
+    cmd: "docker exec -i clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) +   1 }} bash -c 'cat {{ clickhouse_base_directory_path }}/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client --secure --query=\"INSERT INTO {{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }} FORMAT CSV\"'"
