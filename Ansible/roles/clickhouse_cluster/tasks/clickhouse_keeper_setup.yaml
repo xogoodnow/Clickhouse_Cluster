@@ -1,0 +1,54 @@
+---
+- name: check connectivity
+  ping:
+    data: alive
+
+
+- name: Copy certs to the destinations
+  ansible.builtin.copy:
+    src: files/certs/
+    dest: "{{ clickhouse_base_directory_path }}{{ clickhouse_certs_base_path }}"
+    owner: root
+    group: root
+    mode: '0777'
+
+
+- name: Pull the Clickhouse_Keeper image
+  docker_image:
+    name: "{{ clickhouse_keeper_base_image }}:{{ clickhouse_keeper_version }}"
+    source: pull
+
+
+- name: Set the config file for Clickhouse_Keeper instances
+  template:
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Config/keeper_config.xml"
+    src: "templates/{{ item }}"
+    mode: "0777"
+  with_items:
+    - keeper_config_tls.xml.j2
+
+
+
+- name: Set the compose file for clickhouse keeper
+  template:
+    src: "templates/docker-compose-tls.yaml.j2"
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/docker-compose.yaml"
+
+
+- name: Run the container for clickhouse keeper
+  community.general.docker_compose:
+    project_src: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/"
+    pull: true
+    recreate: never
+    state: present
+    restarted: false
+    remove_orphans: no
+    remove_volumes: false
+
+
+
+
+
+
+
+
