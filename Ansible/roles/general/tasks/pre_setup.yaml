@@ -1,0 +1,69 @@
+---
+- name: check connectivity
+  ping:
+    data: alive
+
+
+- name: update and upgrade system
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+
+- name: install some base packages
+  apt:
+    pkg:
+      - net-tools
+      - xz-utils
+      - bmon
+      - curl
+      - tcpdump
+      - vim
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - python3
+      - jq
+      - resolvconf
+      - python3-pip
+      - gpg
+      - lsb-release
+      - telnet
+      - docker-compose
+      - unzip
+    state: present
+
+
+- name: Copy /etc/hosts file
+  template:
+    src: files/etchost.yaml
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: '0644'
+
+
+
+- name: set resolve conf config
+  copy:
+    dest: /etc/resolvconf/resolv.conf.d/head
+    content: |
+      nameserver {{ name_server }}
+
+
+- name: edit resolv.conf file
+  copy:
+    dest: /etc/resolv.conf
+    content: |
+      nameserver {{ name_server }}
+
+
+- name: enable resolvconf service
+  systemd:
+    name: resolvconf
+    state: started
+    enabled: yes
+
+
+
+
