@@ -1,0 +1,48 @@
+---
+- name: check connectivity
+  ping:
+    data: alive
+
+
+
+
+- name: Pull the Clickhouse image
+  docker_image:
+    name: "{{ clickhouse_base_image }}:{{ clickhouse_version }}"
+    source: pull
+
+
+- name: Set the config file for clickhouse  instances
+  template:
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Config/config.xml"
+    src: templates/config_tls.xml.j2
+    mode: "0777"
+
+- name: Set the config file for clickhouse client
+  template:
+    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Config/config-client.xml"
+    src: templates/clickhouse-client-tls.xml.j2
+    mode: "0777"
+
+
+
+- name: Set the compose file for clickhouse
+  template:
+    src: "templates/docker-compose-tls.yaml.j2"
+    dest: "{{ clickhouse_base_directory_path }}Clickhouse/Docker/docker-compose.yaml"
+
+
+- name: Run the container for clickhouse
+  community.general.docker_compose:
+    project_src: "{{ clickhouse_base_directory_path }}Clickhouse/Docker/"
+    pull: true
+    recreate: never
+    state: present
+    restarted: false
+    remove_orphans: no
+    remove_volumes: false
+
+
+
+
+
