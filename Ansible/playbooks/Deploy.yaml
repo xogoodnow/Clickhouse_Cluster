@@ -1,0 +1,26 @@
+---
+- name: General setup
+  hosts: all
+  become: true
+  roles:
+    - role: general
+      tags: general-setup
+
+- name: setting up clickhouse cluster
+  hosts: redis
+  become: true
+  roles:
+    - role: clickhouse_cluster
+      tags: clickhouse-setup
+
+
+- name: Set up the monitoring stack
+  hosts: monitoring
+  become: true
+  tasks:
+    - name: Include monitoring roles
+      include_role:
+        name: "{{ item }}"
+      loop:
+        - $PWD/roles/victoria_metrics_setup_dockerized
+      when: mode == 'monitoring'
