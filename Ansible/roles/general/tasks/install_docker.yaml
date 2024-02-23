@@ -1,0 +1,59 @@
+---
+- name: Check for connectivity
+  ping:
+    data: alive
+
+
+- name: install required packages
+  apt:
+    pkg:
+    - curl
+    - gnupg
+    - ca-certificates
+    state: present
+
+
+- name: create keyring directory
+  file:
+    path: /etc/apt/keyrings
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+
+- name: add docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    keyring: /etc/apt/keyrings/docker.gpg
+
+
+
+- name: add the repository
+
+  apt_repository:
+    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu   jammy stable
+    state: present
+
+
+
+- name: update repository
+  apt:
+    update_cache: yes
+
+
+- name: install docker
+  apt:
+    pkg:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+    - python3-pip
+
+
+- name: install dockerpy
+  pip:
+    name: docker
+
