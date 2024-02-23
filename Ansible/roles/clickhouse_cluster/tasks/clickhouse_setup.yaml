@@ -26,10 +26,16 @@
 
 
 
-- name: Set the compose file for clickhouse
+- name: Set the compose file for clickhouse (tls)
   template:
-    src: "templates/docker-compose-tls.yaml.j2"
+    src: "templates/docker-compose-tls-clickhouse.yaml.j2"
     dest: "{{ clickhouse_base_directory_path }}Clickhouse/Docker/docker-compose.yaml"
+
+
+#- name: Set the compose file for clickhouse
+#  template:
+#    src: "templates/docker-compose-clickhouse.yaml.j2"
+#    dest: "{{ clickhouse_base_directory_path }}Clickhouse/Docker/docker-compose.yaml"
 
 
 - name: Run the container for clickhouse
