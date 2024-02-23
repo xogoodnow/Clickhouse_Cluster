@@ -1,0 +1,42 @@
+---
+- name: check connectivity
+  ping:
+    data: alive
+
+
+- name: Create the required directories
+  file:
+    path: "{{ clickhouse_base_directory_path }}{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0777"
+  with_items:
+    - /Clickhouse/
+    - /Clickhouse/Logs/
+    - /Clickhouse/Data/
+    - /Clickhouse/Docker/
+    - /Clickhouse/Config/
+    - /Clickhouse/Config/Certs
+    - /Clickhouse/Exporter/
+    - /Clickhouse/Exporter/Docker
+    - /Clickhouse/Keeper/
+    - /Clickhouse/Keeper/Config/
+    - /Clickhouse/Keeper/Docker/
+    - /Clickhouse/Keeper/Logs/
+    - /Clickhouse/Clickhouse_SQL_schema/
+    - /var/lib/clickhouse/coordination/snapshots
+    - /var/log/clickhouse/coordination/logs
+
+
+
+- name: Create the files for general and error log files
+  file:
+    path: "{{ clickhouse_base_directory_path }}{{ item }}"
+    state: touch
+    owner: root
+    group: root
+    mode: "0777"
+  with_items:
+    - "{{ clickhouse_keeper_log_file_path_on_host }}"
+    - "{{ clickhouse_keeper_error_file_path_on_host }}"
