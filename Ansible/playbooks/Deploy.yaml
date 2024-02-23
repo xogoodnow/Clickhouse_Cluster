@@ -7,7 +7,7 @@
       tags: general-setup
 
 - name: setting up clickhouse cluster
-  hosts: redis
+  hosts: clickhouse
   become: true
   roles:
     - role: clickhouse_cluster
