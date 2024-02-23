@@ -93,7 +93,7 @@
 - name: Fetching the certs for keeper
   ansible.builtin.fetch:
     src: "{{ clickhouse_base_directory_path }}{{ clickhouse_certs_base_path }}{{ item.remote_file }}"
-    dest: "$PWD/roles/clickhouse_keeper_setup/files/certs/{{ item.local_file }}"
+    dest: "$PWD/roles/clickhouse_cluster/files/certs/{{ item.local_file }}"
     flat: yes
   with_items:
     - { remote_file: 'clickhouse-1.crt', local_file: 'clickhouse-1.crt' }
