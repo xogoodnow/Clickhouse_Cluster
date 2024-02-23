@@ -1,0 +1,321 @@
+<clickhouse>
+
+    <logger>
+        <!-- Level of detail in logging. Using 'information' for general production use. -->
+        <level>{{ clickhouse_log_level }}</level>
+
+        <!-- Paths to log files. -->
+        <log>{{ clickhouse_log_file_path }}</log>
+        <errorlog>{{ clickhouse_error_file_path }}</errorlog>
+
+        <!-- Rotation policy: -->
+        <!-- 'size': Maximum size of a log file before rotation occurs. -->
+        <!-- 'count': Number of rotated log files to keep. -->
+        <size>500M</size>
+        <count>5</count>
+
+        <!-- JSON formatting for structured logs, useful for log management systems. -->
+        <formatting>
+            <type>json</type>
+            <names>
+                <date_time>date_time</date_time>
+                <thread_name>thread_name</thread_name>
+                <thread_id>thread_id</thread_id>
+                <level>level</level>
+                <query_id>query_id</query_id>
+                <logger_name>logger_name</logger_name>
+                <message>message</message>
+                <source_file>source_file</source_file>
+                <source_line>source_line</source_line>
+            </names>
+        </formatting>
+    </logger>
+
+
+    <prometheus>
+        <endpoint>/metrics</endpoint>
+        <port>{{ clickhouse_metrics_exposed_on_port }}</port>
+        <status_info>1</status_info>
+        <events>1</events>
+        <asynchronous_metrics>1</asynchronous_metrics>
+        <status>1</status>
+        <metrics>1</metrics>
+        <metric_events>1</metric_events>
+        <profile_events>1</profile_events>
+        <system_metrics>1</system_metrics>
+        <system_events>1</system_events>
+        <asynchronous_metrics_frequency>60</asynchronous_metrics_frequency>
+    </prometheus>
+
+    {% if ansible_play_batch.index(inventory_hostname) == 0 %}
+
+   <macros>
+        <shard>01</shard>
+        <replica>clickhouse-1</replica>
+        <cluster>{{ clickhouse_production_cluster_name }}</cluster>
+    </macros>
+
+    {% elif ansible_play_batch.index(inventory_hostname) == 1 %}
+
+    <macros>
+        <shard>01</shard>
+        <replica>clickhouse-2</replica>
+        <cluster>{{ clickhouse_production_cluster_name }}</cluster>
+    </macros>
+
+    {% elif ansible_play_batch.index(inventory_hostname) == 2 %}
+   <macros>
+        <shard>01</shard>
+        <replica>clickhouse-3</replica>
+        <cluster>{{ clickhouse_production_cluster_name }}</cluster>
+    </macros>
+
+    {% endif %}
+
+
+
+
+
+
+<!--
+    <url_scheme_mappers>
+        <s3>
+            <to>https://{bucket}.s3.amazonaws.com</to>
+        </s3>
+        <gs>
+            <to>https://{bucket}.storage.googleapis.com</to>
+        </gs>
+        <oss>
+            <to>https://{bucket}.oss.aliyuncs.com</to>
+        </oss>
+    </url_scheme_mappers>
+
+-->
+
+    <https_port>{{ clickhouse_https_port }}</https_port>
+
+    <tcp_port_secure>{{ clickhouse_tcp_secure_port }}</tcp_port_secure>
+
+    <interserver_https_port>{{ clickhouse_interserver_https_port }}</interserver_https_port>
+
+
+    <listen_host>{{ clickhouse_listen_address }}</listen_host>
+
+
+    <max_connections>{{ clickhouse_max_connections }}</max_connections>
+
+    <keep_alive_timeout>3</keep_alive_timeout>
+
+
+    <concurrent_threads_soft_limit_num>5</concurrent_threads_soft_limit_num>
+    <concurrent_threads_soft_limit_ratio_to_cores>5</concurrent_threads_soft_limit_ratio_to_cores>
+
+    <max_concurrent_queries>4000</max_concurrent_queries>
+
+    <max_server_memory_usage>0</max_server_memory_usage>
+
+
+    <max_thread_pool_size>10000</max_thread_pool_size>
+
+
+    <!-- Configure other thread pools: -->
+    <background_buffer_flush_schedule_pool_size>8</background_buffer_flush_schedule_pool_size>
+    <background_pool_size>32</background_pool_size>
+    <background_merges_mutations_concurrency_ratio>4</background_merges_mutations_concurrency_ratio>
+    <background_merges_mutations_scheduling_policy>oldest</background_merges_mutations_scheduling_policy>
+    <background_move_pool_size>16</background_move_pool_size>
+    <background_fetches_pool_size>16</background_fetches_pool_size>
+    <background_common_pool_size>4</background_common_pool_size>
+    <background_schedule_pool_size>64</background_schedule_pool_size>
+    <background_message_broker_schedule_pool_size>8</background_message_broker_schedule_pool_size>
+    <background_distributed_schedule_pool_size>16</background_distributed_schedule_pool_size>
+
+
+
+    <max_server_memory_usage_to_ram_ratio>0.9</max_server_memory_usage_to_ram_ratio>
+
+
+    <total_memory_profiler_step>4194304</total_memory_profiler_step>
+
+    <total_memory_tracker_sample_probability>0</total_memory_tracker_sample_probability>
+
+    <max_open_files>262144</max_open_files>
+
+
+    <uncompressed_cache_size>17179869184</uncompressed_cache_size>
+
+
+
+    <mark_cache_size>10737418240</mark_cache_size>
+
+
+
+
+    <mmap_cache_size>3000</mmap_cache_size>
+
+
+
+
+
+    <!-- Cache size in bytes for compiled expressions.-->
+    <compiled_expression_cache_size>134217728</compiled_expression_cache_size>
+
+    <!-- Cache size in elements for compiled expressions.-->
+    <compiled_expression_cache_elements_size>10000</compiled_expression_cache_elements_size>
+
+    <validate_tcp_client_information>false</validate_tcp_client_information>
+
+    <!-- Path to data directory, with trailing slash. -->
+    <path>/var/lib/clickhouse/</path>
+
+
+
+
+    <!-- Path to temporary data for processing hard queries. -->
+    <tmp_path>/var/lib/clickhouse/tmp/</tmp_path>
+
+
+
+
+    <!-- Disable AuthType plaintext_password and no_password for ACL. -->
+    <allow_plaintext_password>1</allow_plaintext_password>
+    <allow_no_password>0</allow_no_password>
+    <allow_implicit_no_password>0</allow_implicit_no_password>
+
+
+
+    <default_password_type>sha256_password</default_password_type>
+
+    <!-- Work factor for bcrypt_password authentication type-->
+    <bcrypt_workfactor>12</bcrypt_workfactor>
+
+
+    <user_files_path>/var/lib/clickhouse/user_files/</user_files_path>
+
+
+
+    <user_directories>
+        <users_xml>
+            <!-- Path to configuration file with predefined users. -->
+            <path>users.xml</path>
+        </users_xml>
+        <local_directory>
+            <!-- Path to folder where users created by SQL commands are stored. -->
+            <path>/var/lib/clickhouse/access/</path>
+        </local_directory>
+
+    </user_directories>
+
+
+
+
+    <mlock_executable>true</mlock_executable>
+
+
+
+<remote_servers>
+    <{{ clickhouse_production_cluster_name }}>
+        <shard>
+            <internal_replication>true</internal_replication>
+            <replica>
+                <host>clickhouse-1</host>
+                <port>{{ clickhouse_tcp_secure_port }}</port>
+                <user>{{ clickhouse_user }}</user>
+                <password>{{ clickhouse_password }}</password>
+                <secure>1</secure>
+            </replica>
+            <replica>
+                <host>clickhouse-2</host>
+                <port>{{ clickhouse_tcp_secure_port }}</port>
+                <user>{{ clickhouse_user }}</user>
+                <password>{{ clickhouse_password }}</password>
+                <secure>1</secure>
+            </replica>
+            <replica>
+                <host>clickhouse-3</host>
+                <port>{{ clickhouse_tcp_secure_port }}</port>
+                <user>{{ clickhouse_user }}</user>
+                <password>{{ clickhouse_password }}</password>
+                <secure>1</secure>
+            </replica>
+        </shard>
+    </{{ clickhouse_production_cluster_name }}>
+</remote_servers>
+
+
+
+
+    <zookeeper>
+        <node index="1">
+            <host>clickhouse-1</host>
+            <port>{{ clickhouse_keeper_tls_listening_port }}</port>
+            <secure>1</secure>
+        </node>
+        <node index="2">
+            <host>clickhouse-2</host>
+            <port>{{ clickhouse_keeper_tls_listening_port }}</port>
+            <secure>1</secure>
+        </node>
+        <node index="3">
+            <host>clickhouse-3</host>
+            <port>{{ clickhouse_keeper_tls_listening_port }}</port>
+            <secure>1</secure>
+        </node>
+    </zookeeper>
+
+
+
+    <builtin_dictionaries_reload_interval>3600</builtin_dictionaries_reload_interval>
+
+
+
+    <max_session_timeout>3600</max_session_timeout>
+
+
+    <default_session_timeout>60</default_session_timeout>
+
+
+
+
+    <query_cache>
+        <max_size_in_bytes>2147483648</max_size_in_bytes>
+        <max_entries>2048</max_entries>
+        <max_entry_size_in_bytes>1048576</max_entry_size_in_bytes>
+        <max_entry_size_in_rows>30000000</max_entry_size_in_rows>
+    </query_cache>
+
+
+    <distributed_ddl>
+        <path>/clickhouse/task_queue/ddl/</path>
+        <monitor_ddl>true</monitor_ddl>
+        <profile>default</profile>
+        <pool_size>4</pool_size>
+
+
+    </distributed_ddl>
+
+    <openSSL>
+        <server>
+            <certificateFile>/etc/clickhouse-server/certs/clickhouse-{{ ansible_play_batch.index(inventory_hostname) + 1 }}.crt</certificateFile>
+            <privateKeyFile>/etc/clickhouse-server/certs/clickhouse-{{ ansible_play_batch.index(inventory_hostname) + 1 }}.key</privateKeyFile>
+            <verificationMode>relaxed</verificationMode>
+            <caConfig>/etc/clickhouse-server/certs/clickhouse_ca.crt</caConfig>
+            <cacheSessions>true</cacheSessions>
+            <disableProtocols>sslv2,sslv3</disableProtocols>
+            <preferServerCiphers>true</preferServerCiphers>
+        </server>
+        <client>
+            <loadDefaultCAFile>false</loadDefaultCAFile>
+            <caConfig>/etc/clickhouse-server/certs/clickhouse_ca.crt</caConfig>
+            <cacheSessions>true</cacheSessions>
+            <disableProtocols>sslv2,sslv3</disableProtocols>
+            <preferServerCiphers>true</preferServerCiphers>
+            <verificationMode>relaxed</verificationMode>
+            <invalidCertificateHandler>
+                <name>RejectCertificateHandler</name>
+            </invalidCertificateHandler>
+        </client>
+    </openSSL>
+</clickhouse>
+
+
