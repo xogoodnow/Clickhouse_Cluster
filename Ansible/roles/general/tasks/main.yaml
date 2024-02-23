@@ -1,0 +1,9 @@
+---
+- name: Performing pre-setup
+  include_tasks: pre_setup.yaml
+
+- name: Install docker on all
+  include_tasks: install_docker.yaml
+
+- name: Install node exporter
+  include_tasks: node_exporter_setup.yaml
