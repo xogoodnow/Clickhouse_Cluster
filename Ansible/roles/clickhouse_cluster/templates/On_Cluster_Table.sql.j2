@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS {{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }} ON CLUSTER "{{ clickhouse_production_cluster_name }}"
+(
+    `Year` Int32,
+    `Industry_aggregation_NZSIOC` String,
+    `Industry_code_NZSIOC` String,
+    `Industry_name_NZSIOC` String,
+    `Units` String,
+    `Variable_code` String,
+    `Variable_name` String,
+    `Variable_category` String,
+    `Value` String,
+    `Industry_code_ANZSIC06` String
+)
+ENGINE = ReplicatedMergeTree('/clickhouse/tables/{shard}/{{ clickhouse_test_table_name }}', '{replica}')
+ORDER BY Year
+SETTINGS index_granularity = 8192
