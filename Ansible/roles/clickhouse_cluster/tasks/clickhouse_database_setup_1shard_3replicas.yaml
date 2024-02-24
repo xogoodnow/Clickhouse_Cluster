@@ -15,12 +15,12 @@
     - On_Cluster_DB.sql.j2
     - On_Cluster_Table.sql.j2
 
-- name: debug
-  debug:
-    msg: "{{ item.command }}"
-  with_items:
-    - { command: "docker exec -i clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) +   1 }} bash -c 'cat {{ clickhouse_base_directory_path }}/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client --secure --query=\"INSERT INTO {{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }} FORMAT CSV\"'" }
-    - { command: "docker exec -i \"clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) +   1 }}\" bash -c 'clickhouse-client --secure --query=\"$(cat {{ clickhouse_base_directory_path }}{{ item }})\"'" }
+#- name: debug
+#  debug:
+#    msg: "{{ item.command }}"
+#  with_items:
+#    - { command: "docker exec -i clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) +   1 }} bash -c 'cat {{ clickhouse_base_directory_path }}/clickhouse_sql_schema/annual-enterprise-survey-2021-financial-year-provisional-csv.csv | clickhouse-client --secure --query=\"INSERT INTO {{ clickhouse_test_database_name }}.{{ clickhouse_test_table_name }} FORMAT CSV\"'" }
+#    - { command: "docker exec -i \"clickhouse-{{ ansible_hostname }}-{{ ansible_play_hosts_all.index(inventory_hostname) +   1 }}\" bash -c 'clickhouse-client --secure --query=\"$(cat {{ clickhouse_base_directory_path }}{{ item }})\"'" }
 
 - name: Execute SQL commands in ClickHouse container
   shell:
