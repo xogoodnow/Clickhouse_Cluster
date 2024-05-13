@@ -19,3 +19,4 @@
 - name: Set up the replication strategy
   include_tasks: clickhouse_database_setup_1shard_3replicas.yaml
   run_once: true
+
