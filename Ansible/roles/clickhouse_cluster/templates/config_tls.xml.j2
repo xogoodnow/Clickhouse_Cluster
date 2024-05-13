@@ -1,4 +1,42 @@
 <clickhouse>
+    <storage_configuration>
+        <disks>
+
+            <backups>
+                <type>local</type>
+                <path>{{ clickhouse_backup_path_on_container }}</path>
+            </backups>
+        </disks>
+<!--
+            <s3_plain>
+                <type>s3_plain</type>
+                <endpoint>{{ clickhouse_s3_bucket_backup }}.{{ clickhouse_s3_backup_endpoint }}</endpoint>
+                <access_key_id>{{ clickhouse_s3_access_key }}</access_key_id>
+                <secret_access_key>{{ clickhouse_s3_secret_key }}</secret_access_key>
+            </s3_plain>
+
+
+
+        <policies>
+            <s3>
+                <volumes>
+                    <main>
+                        <disk>s3_plain</disk>
+                    </main>
+                </volumes>
+            </s3>
+        </policies>
+-->
+
+
+    </storage_configuration>
+    <backups>
+ <!--       <allowed_disk>s3_plain</allowed_disk> -->
+        <allowed_disk>backups</allowed_disk>
+        <allowed_path>{{ clickhouse_backup_path_on_container }}</allowed_path>
+        <allow_concurrent_backups>false</allow_concurrent_backups>
+        <allow_concurrent_restores>false</allow_concurrent_restores>
+    </backups>
 
     <logger>
         <!-- Level of detail in logging. Using 'information' for general production use. -->
@@ -11,7 +49,7 @@
         <!-- Rotation policy: -->
         <!-- 'size': Maximum size of a log file before rotation occurs. -->
         <!-- 'count': Number of rotated log files to keep. -->
-        <size>500M</size>
+        <size>20G</size>
         <count>5</count>
 
         <!-- JSON formatting for structured logs, useful for log management systems. -->
@@ -74,24 +112,6 @@
 
 
 
-
-
-
-<!--
-    <url_scheme_mappers>
-        <s3>
-            <to>https://{bucket}.s3.amazonaws.com</to>
-        </s3>
-        <gs>
-            <to>https://{bucket}.storage.googleapis.com</to>
-        </gs>
-        <oss>
-            <to>https://{bucket}.oss.aliyuncs.com</to>
-        </oss>
-    </url_scheme_mappers>
-
--->
-
     <https_port>{{ clickhouse_https_port }}</https_port>
 
     <tcp_port_secure>{{ clickhouse_tcp_secure_port }}</tcp_port_secure>
@@ -104,35 +124,35 @@
 
     <max_connections>{{ clickhouse_max_connections }}</max_connections>
 
-    <keep_alive_timeout>3</keep_alive_timeout>
+    <keep_alive_timeout>15</keep_alive_timeout>
 
 
-    <concurrent_threads_soft_limit_num>5</concurrent_threads_soft_limit_num>
-    <concurrent_threads_soft_limit_ratio_to_cores>5</concurrent_threads_soft_limit_ratio_to_cores>
+    <concurrent_threads_soft_limit_num>0</concurrent_threads_soft_limit_num>
+    <concurrent_threads_soft_limit_ratio_to_cores>0</concurrent_threads_soft_limit_ratio_to_cores>
 
-    <max_concurrent_queries>4000</max_concurrent_queries>
+    <max_concurrent_queries>0</max_concurrent_queries>
 
     <max_server_memory_usage>0</max_server_memory_usage>
 
 
-    <max_thread_pool_size>10000</max_thread_pool_size>
+    <max_thread_pool_size>15000</max_thread_pool_size>
 
 
     <!-- Configure other thread pools: -->
-    <background_buffer_flush_schedule_pool_size>8</background_buffer_flush_schedule_pool_size>
+    <background_buffer_flush_schedule_pool_size>{{ clickhouse_background_buffer_flush_schedule_pool_size }}</background_buffer_flush_schedule_pool_size>
     <background_pool_size>32</background_pool_size>
-    <background_merges_mutations_concurrency_ratio>4</background_merges_mutations_concurrency_ratio>
+    <background_merges_mutations_concurrency_ratio>3</background_merges_mutations_concurrency_ratio>
     <background_merges_mutations_scheduling_policy>oldest</background_merges_mutations_scheduling_policy>
-    <background_move_pool_size>16</background_move_pool_size>
-    <background_fetches_pool_size>16</background_fetches_pool_size>
-    <background_common_pool_size>4</background_common_pool_size>
+    <background_move_pool_size>{{ clickhouse_background_move_pool_size }}</background_move_pool_size>
+    <background_fetches_pool_size>{{ clickhouse_background_fetches_pool_size }}</background_fetches_pool_size>
+    <background_common_pool_size>{{ clickhouse_background_common_pool_size }}</background_common_pool_size>
     <background_schedule_pool_size>64</background_schedule_pool_size>
-    <background_message_broker_schedule_pool_size>8</background_message_broker_schedule_pool_size>
-    <background_distributed_schedule_pool_size>16</background_distributed_schedule_pool_size>
+    <background_message_broker_schedule_pool_size>32</background_message_broker_schedule_pool_size>
+    <background_distributed_schedule_pool_size>32</background_distributed_schedule_pool_size>
 
 
 
-    <max_server_memory_usage_to_ram_ratio>0.9</max_server_memory_usage_to_ram_ratio>
+    <max_server_memory_usage_to_ram_ratio>0</max_server_memory_usage_to_ram_ratio>
 
 
     <total_memory_profiler_step>4194304</total_memory_profiler_step>
@@ -272,7 +292,7 @@
     <max_session_timeout>3600</max_session_timeout>
 
 
-    <default_session_timeout>60</default_session_timeout>
+    <default_session_timeout>120</default_session_timeout>
 
 
 
@@ -289,7 +309,7 @@
         <path>/clickhouse/task_queue/ddl/</path>
         <monitor_ddl>true</monitor_ddl>
         <profile>default</profile>
-        <pool_size>4</pool_size>
+        <pool_size>20</pool_size>
 
 
     </distributed_ddl>
