@@ -40,19 +40,22 @@
 #    dest: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/docker-compose.yaml"
 
 
-- name: Run the container for clickhouse keeper
-  community.general.docker_compose:
-    project_src: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/"
-    pull: true
-    recreate: never
-    state: present
-    restarted: false
-    remove_orphans: no
-    remove_volumes: false
+#- name: Run the container for clickhouse keeper
+#  community.general.docker_compose:
+#    project_src: "{{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/"
+#    pull: true
+#    recreate: never
+#    state: present
+#    restarted: false
+#    remove_orphans: no
+#    remove_volumes: false
 
 
 
 
+- name: Run the containers for clickhouse-keeper
+  shell:
+    cmd: "docker-compose -f {{ clickhouse_base_directory_path }}/Clickhouse/Keeper/Docker/docker-compose.yaml up -d "
 
 
 
