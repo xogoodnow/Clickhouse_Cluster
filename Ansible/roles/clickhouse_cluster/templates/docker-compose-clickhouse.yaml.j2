@@ -7,8 +7,8 @@ services:
         - "{{ clickhouse_base_directory_path }}{{ clickhouse_data_path_on_host }}:{{ clickhouse_data_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}{{ clickhouse_log_directory_path_on_host }}:{{ clickhouse_log_directory_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}Clickhouse/Config/config.xml:/etc/clickhouse-server/config.xml"
-        - "{{ clickhouse_log_coordination_path_on_host }}:{{ clickhouse_log_coordination_path_on_container }}"
-        - "{{ clickhouse_snapshot_coordination_path_on_host }}:{{ clickhouse_snapshot_coordination_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}{{ clickhouse_log_coordination_path_on_host }}:{{ clickhouse_log_coordination_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}{{ clickhouse_snapshot_coordination_path_on_host }}:{{ clickhouse_snapshot_coordination_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}Clickhouse/Clickhouse_SQL_schema/:/root/clickhouse_sql_schema/"
 
     restart: {{ clickhouse_restart_policy }}
