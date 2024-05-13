@@ -8,7 +8,10 @@ services:
       - "{{ clickhouse_base_directory_path }}{{ clickhouse_keeper_log_file_path_on_host }}:{{ clickhouse_keeper_log_file_path_on_container }}"
       - "{{ clickhouse_base_directory_path }}{{ clickhouse_keeper_error_file_path_on_host }}:{{ clickhouse_keeper_error_file_path_on_container }}"
       - "{{ clickhouse_base_directory_path }}{{ clickhouse_certs_base_path }}:{{ clickhouse_cert_path_on_container }}"
+      - "{{ clickhouse_base_directory_path }}{{ clickhouse_lib_base_path_on_host }}:{{ clickhouse_lib_base_path_on_container }}"
     restart: unless-stopped
+    environment:
+      CLICHOUSECLUSTER_DEPLOYMENT_ENVIRONMENT: "{{ clichousecluster_deployment_environment }}"
     network_mode: host
     ulimits:
       nofile:
