@@ -11,10 +11,12 @@
     owner: root
     group: root
     mode: "0777"
+    recurse: true
   with_items:
     - /Clickhouse/
     - /Clickhouse/Logs/
     - /Clickhouse/Data/
+    - /Clickhouse/Backups/
     - /Clickhouse/Docker/
     - /Clickhouse/Config/
     - /Clickhouse/Config/Certs
@@ -24,9 +26,16 @@
     - /Clickhouse/Keeper/Config/
     - /Clickhouse/Keeper/Docker/
     - /Clickhouse/Keeper/Logs/
-    - /Clickhouse/Clickhouse_SQL_schema/
-    - /var/lib/clickhouse/coordination/snapshots
-    - /var/log/clickhouse/coordination/logs
+    - /Clickhouse/Keeper/Lib/
+    - /Clickhouse/Var/
+    - /Clickhouse/Var/Lib/Clickhouse/Coordination/Snapshots/
+    - /Clickhouse/Var/Log/Clickhouse/Coordination/Logs/
+    - /Clickhouse/{{clickhouse_fluentbit_base_directory}}
+    - /Clickhouse/{{clickhouse_fluentbit_base_directory}}/Docker/
+    - /Clickhouse/{{clickhouse_fluentbit_base_directory}}/Config/
+
+
+
 
 
 
