@@ -1,4 +1,4 @@
-.idea/**/workspace.xml
+g.idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
@@ -17,6 +17,7 @@
 cmake-build-*/
 .idea/**/mongoSettings.xml
 *.iws
+.idea
 out/
 .idea_modules/
 atlassian-ide-plugin.xml
@@ -42,3 +43,6 @@ override.tf.json
 .terraformrc
 terraform.rc
 *.DS_Store
+*.log
+.vscode/
+*.kang_notes
