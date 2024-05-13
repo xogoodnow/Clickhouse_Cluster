@@ -5,10 +5,11 @@ services:
     image: "{{ clickhouse_base_image }}:{{ clickhouse_version }}"
     volumes:
         - "{{ clickhouse_base_directory_path }}{{ clickhouse_data_path_on_host }}:{{ clickhouse_data_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}{{ clickhouse_backup_path_on_host }}:{{ clickhouse_backup_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}{{ clickhouse_log_directory_path_on_host }}:{{ clickhouse_log_directory_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}Clickhouse/Config/config.xml:/etc/clickhouse-server/config.xml"
-        - "{{ clickhouse_log_coordination_path_on_host }}:{{ clickhouse_log_coordination_path_on_container }}"
-        - "{{ clickhouse_snapshot_coordination_path_on_host }}:{{ clickhouse_snapshot_coordination_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}{{ clickhouse_log_coordination_path_on_host }}:{{ clickhouse_log_coordination_path_on_container }}"
+        - "{{ clickhouse_base_directory_path }}{{ clickhouse_snapshot_coordination_path_on_host }}:{{ clickhouse_snapshot_coordination_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}Clickhouse/Clickhouse_SQL_schema/:/root/clickhouse_sql_schema/"
         - "{{ clickhouse_base_directory_path }}{{ clickhouse_certs_base_path }}:{{ clickhouse_cert_path_on_container }}"
         - "{{ clickhouse_base_directory_path }}/Clickhouse/Config/config-client.xml:{{ clickhouse_client_config_path_on_container }}"
@@ -26,6 +27,7 @@ services:
       CLICKHOUSE_USER: "{{ clickhouse_user }}"
       CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: "1"
       CLICKHOUSE_PASSWORD: "{{ clickhouse_password }}"
+      CLICHOUSECLUSTER_DEPLOYMENT_ENVIRONMENT: "{{ clichousecluster_deployment_environment }}"
     logging:
       driver: json-file
       options:
