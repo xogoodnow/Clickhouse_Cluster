@@ -5,12 +5,12 @@
         <log>{{ clickhouse_keeper_log_file_path_on_container }}</log>
         <errorlog>{{ clickhouse_keeper_error_file_path_on_container }}</errorlog>
 
-        <size>1000M</size>
+        <size>10000M</size>
         <count>10</count>
     </logger>
     <max_connections>{{ clickhouse_keeper_max_con }}</max_connections>
     <listen_host>{{ clickhouse_keeper_listening_address  }}</listen_host>
-    
+
     <keeper_server>
         <tcp_port_secure>{{ clickhouse_keeper_tls_listening_port }}</tcp_port_secure>
         <server_id>{{ ansible_play_batch.index(inventory_hostname) + 1 }}</server_id>
@@ -18,8 +18,8 @@
         <snapshot_storage_path>{{ clickhouse_keeper_coordination_snapshot_path_on_container }}</snapshot_storage_path>
 
         <coordination_settings>
-            <operation_timeout_ms>10000</operation_timeout_ms>
-            <session_timeout_ms>30000</session_timeout_ms>
+            <operation_timeout_ms>60000</operation_timeout_ms>
+            <session_timeout_ms>650000</session_timeout_ms>
             <raft_logs_level>trace</raft_logs_level>
         </coordination_settings>
 
