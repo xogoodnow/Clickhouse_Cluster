@@ -74,3 +74,7 @@ clickhouse_lib_base_path_on_host: "/Clickhouse/Keeper/Lib/"
 clickhouse_lib_base_path_on_container: "/var/lib/clickhouse-keeper"
 clickhouse_backup_path_on_container: "/backups/"
 clickhouse_backup_path_on_host: "/Clickhouse/Backups/"
+clickhouse_s3_bucket_backup: # <Place_Holder>
+clickhouse_s3_access_key:  # <Place_Holder>
+clickhouse_s3_secret_key:  # <Place_Holder>
+clickhouse_s3_backup_endpoint:  # <Place_Holder>
