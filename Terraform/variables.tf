@@ -32,6 +32,11 @@ variable "location" {
   default     = "hel1"
 }
 
+variable "ssh_key_master" {
+  description = "Master SSH public key file path to be attached to all servers. Leave empty for no master SSH key."
+  type        = string
+}
+
 variable "local_files_path" {
   description = "Path to store locally generated files (e.g., keys, certificates)."
   type        = string

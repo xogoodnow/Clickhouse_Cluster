@@ -1,5 +1,6 @@
 module "ssh_keys" {
   source           = "./modules/ssh_keys"
+  ssh_key_master   = var.ssh_key_master
   local_files_path = var.local_files_path
 }
 

@@ -5,8 +5,14 @@ resource "tls_private_key" "ssh_key_bastion" {
 }
 
 resource "hcloud_ssh_key" "ssh_keys" {
-  name       = "ssh_key_bastion"
-  public_key = tls_private_key.ssh_key_bastion.public_key_openssh
+  for_each = merge(
+    {
+      bastion = tls_private_key.ssh_key_bastion.public_key_openssh
+    },
+    var.ssh_key_master != null ? { master = file(var.ssh_key_master) } : {}
+  )
+  name       = "ssh_key_${each.key}"
+  public_key = each.value
 
   lifecycle {
     create_before_destroy = true
