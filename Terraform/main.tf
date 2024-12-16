@@ -4,10 +4,8 @@ module "ssh_keys" {
   local_files_path = var.local_files_path
 }
 
-
 module "servers" {
   source       = "./modules/servers"
-  hcloud_token = var.hcloud_token
   image_name   = var.image_name
   server_type  = var.server_type
   location     = var.location
