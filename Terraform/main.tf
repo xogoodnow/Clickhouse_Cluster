@@ -19,9 +19,8 @@ module "volume" {
   depends_on = [module.servers]
 }
 
-
 module "Clickhouse" {
-  source = "./modules/Clickhouse"
-  hcloud_token = var.hcloud_token
-  depends_on = [module.volume]
+  source           = "./modules/Clickhouse"
+  depends_on       = [module.volume]
+  local_files_path = var.local_files_path
 }
