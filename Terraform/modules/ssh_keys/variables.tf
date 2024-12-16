@@ -1,6 +1,9 @@
+variable "local_files_path" {
+  description = "Path to store local files generated"
+  type        = string
 
-variable "hcloud_token" {
-  description = "The api key for hetzner"
-  sensitive = true # Requires terraform >= 0.14
-  type = string
+  validation {
+    condition     = length(var.local_files_path) > 0
+    error_message = "Local file path cannot be empty"
+  }
 }

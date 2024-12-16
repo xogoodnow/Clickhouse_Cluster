@@ -1,6 +1,6 @@
 module "ssh_keys" {
-  source = "./modules/ssh_keys"
-  hcloud_token = var.hcloud_token
+  source           = "./modules/ssh_keys"
+  local_files_path = var.local_files_path
 }
 
 
