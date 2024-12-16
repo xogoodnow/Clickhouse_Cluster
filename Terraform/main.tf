@@ -17,8 +17,7 @@ module "servers" {
 }
 
 module "volume" {
-  source = "./modules/volume"
-  hcloud_token = var.hcloud_token
+  source     = "./modules/volume"
   depends_on = [module.servers]
 }
 
