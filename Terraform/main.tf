@@ -11,6 +11,8 @@ module "servers" {
   image_name   = var.image_name
   server_type  = var.server_type
   location     = var.location
+  ansible_path = var.ansible_path
+  ssh_key_ids  = module.ssh_keys.ssh_key_ids
   depends_on   = [module.ssh_keys]
 }
 
