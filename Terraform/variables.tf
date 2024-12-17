@@ -64,7 +64,7 @@ variable "local_files_path" {
   type        = string
 
   validation {
-    condition     = fileexists(var.local_files_path)
+    condition     = provider::local::direxists(pathexpand(var.local_files_path))
     error_message = "Local folder path does not exists."
   }
 }
@@ -74,7 +74,7 @@ variable "ansible_path" {
   type        = string
 
   validation {
-    condition     = fileexists(var.ansible_path)
+    condition     = provider::local::direxists(pathexpand(var.ansible_path))
     error_message = "Ansible folder path does not exists."
   }
 }

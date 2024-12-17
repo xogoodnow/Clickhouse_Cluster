@@ -47,7 +47,7 @@ variable "ansible_path" {
   type        = string
 
   validation {
-    condition     = fileexists(var.ansible_path)
+    condition     = provider::local::direxists(pathexpand(var.ansible_path))
     error_message = "Ansible folder path does not exists."
   }
 }

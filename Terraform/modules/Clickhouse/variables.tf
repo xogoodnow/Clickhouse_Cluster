@@ -3,7 +3,7 @@ variable "local_files_path" {
   type        = string
 
   validation {
-    condition     = fileexists(var.local_files_path)
+    condition     = provider::local::direxists(pathexpand(var.local_files_path))
     error_message = "Local folder path does not exists."
   }
 }

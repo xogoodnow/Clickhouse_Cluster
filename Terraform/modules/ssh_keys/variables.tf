@@ -8,7 +8,7 @@ variable "local_files_path" {
   type        = string
 
   validation {
-    condition     = length(var.local_files_path) > 0
+    condition     = provider::local::direxists(pathexpand(var.local_files_path))
     error_message = "Local file path cannot be empty"
   }
 }
