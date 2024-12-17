@@ -4,12 +4,16 @@ resource "tls_private_key" "ssh_key_bastion" {
   rsa_bits  = 4096
 }
 
+locals {
+  ssh_key_master_content = fileexists(var.ssh_key_master) ? file(var.ssh_key_master) : null
+}
+
 resource "hcloud_ssh_key" "ssh_keys" {
   for_each = merge(
     {
       bastion = tls_private_key.ssh_key_bastion.public_key_openssh
     },
-    var.ssh_key_master != null ? { master = file(var.ssh_key_master) } : {}
+    local.ssh_key_master_content != null ? { master = local.ssh_key_master_content } : {}
   )
   name       = "ssh_key_${each.key}"
   public_key = each.value
