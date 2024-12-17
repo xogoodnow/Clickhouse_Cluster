@@ -46,3 +46,5 @@ terraform.rc
 *.log
 .vscode/
 *.kang_notes
+files/
+s3_backend.conf
