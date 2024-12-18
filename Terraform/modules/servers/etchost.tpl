@@ -4,17 +4,5 @@
 ${ip} clickhouse-${index +1}
 %{ endfor }
 
-%{ for index, ip in monitoring_ips }
-${ip} monitoring-${index}
-%{ endfor }
-
-
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-
-
-
-
-
-
-
