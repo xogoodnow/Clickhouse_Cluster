@@ -16,6 +16,6 @@ variable "shard_count" {
 
   validation {
     condition     = var.shard_count >= 1
-    error_message = "Shard count must be at least 3."
+    error_message = "Shard count must be at least 1."
   }
 }
